@@ -9,14 +9,10 @@ namespace Common
 {
     public class DBConnectionString
     {
-        public static string WebUserDB_Select 
+        public static string DB1 
         {
-            get { return ConfigurationManager.ConnectionStrings["WebUserDB"].ToString(); }
+            get { return ConfigurationManager.ConnectionStrings["db1"].ToString(); }
         }
 
-        public static string WebUserDB_Insert
-        {
-            get { return ConfigurationManager.ConnectionStrings["WebUserDB"].ToString(); }
-        }
     }
 }

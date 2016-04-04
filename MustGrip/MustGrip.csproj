@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="MustGrip.Master" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="Handle\MustGripHandle.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -73,6 +74,7 @@
     <Content Include="Index.aspx" />
     <Content Include="js\app.js" />
     <Content Include="js\jquery-1.12.2.js" />
+    <Content Include="Passage\PassageEdit.aspx" />
     <Content Include="Passage\PassageList.aspx" />
     <Content Include="Passage\wenzhang.html" />
     <Content Include="resource\img\dot_16.ico" />
@@ -88,6 +90,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handle\MustGripHandle.ashx.cs">
+      <DependentUpon>MustGripHandle.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -105,6 +110,13 @@
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Passage\PassageEdit.aspx.cs">
+      <DependentUpon>PassageEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Passage\PassageEdit.aspx.designer.cs">
+      <DependentUpon>PassageEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Passage\PassageList.aspx.cs">
       <DependentUpon>PassageList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -116,6 +128,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{c78b4b17-5d91-4384-b656-ff5ef8e7e373}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{0af6ac89-991c-487d-9949-0d894a144321}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{e29ea224-4c95-4fbe-aa74-7c2bc428ea3a}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -132,7 +158,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>26551</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/MustGrip</IISUrl>
+          <IISUrl>http://localhost/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

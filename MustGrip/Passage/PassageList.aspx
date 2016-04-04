@@ -4,6 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="main" class="clear">
+        <div>
+		<a href="/Passage/PassageEdit.aspx" type="button">新增</a>
+	</div>
         <div class="passageList">
             <ul>
                 <li>

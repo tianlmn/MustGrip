@@ -12,7 +12,7 @@ namespace Business
     {
         public static List<WebUserEntity> GetWebUserEntityList()
         {
-            return WebUserData.GetWebUserDataList();
+            return new List<WebUserEntity>();
         }
 
     }
