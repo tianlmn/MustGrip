@@ -76,6 +76,19 @@ var peInit = function(){
 	    var html = $('#txtpcontent').contents().find('body').html();
 	    return HtmlUtil.htmlEncodeByRegExp(html);
 	}
+
+	//test
+	$.ajax({
+	    url: "/Handle/MustGripHandle.ashx",
+	    data: { f: "ReadPassage" },
+	    dataType: "json",
+	    type: "post",
+	    success: function (data) {
+	        $('#txtpcontent').contents().find('body').html(data.msg);
+	    }
+
+	});
+	
 }
 
 //工具类
