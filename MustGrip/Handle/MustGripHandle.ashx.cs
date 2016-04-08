@@ -31,12 +31,11 @@ namespace MustGrip.Handle
             {
                 case "SavePassage":
                     BlogBusiness.SavePassage(json.Deserialize<PassageEntity>(data), PassageRootPath);
-                    response = json.Serialize(new { result = 1, msg = "success" });
+                    response = json.Serialize(new { success = 1, msg = "success" });
                     break;
-                case "ReadPassage":
-                    var content = BlogBusiness.ReadFile(
-                        @"D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\MustGrip\PassageRootPath\04a9b1be-031b-44b2-8872-6229733c94cc.html");
-                    response = json.Serialize(new { result = 1, msg = content });
+                case "GetPassageList":
+                    List<PassageEntity> pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data));
+                    response = json.Serialize(new { success = 1, result = new{PassageList=pList,Total=1} });
                     break;
             }
             

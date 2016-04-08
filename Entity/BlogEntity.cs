@@ -24,5 +24,8 @@ namespace Entity
         public DateTime DataChange_LastTime { get; set; }
 
         public DateTime DataChange_CreateTime { get; set; }
+
+        public string Summary { get; set; }
     }
+
 }

@@ -7,3 +7,4 @@ d:\用户目录\我的文档\visual studio 2013\Projects\mustgrip\Common\bin\Deb
 d:\用户目录\我的文档\visual studio 2013\Projects\mustgrip\Common\bin\Debug\Microsoft.Practices.Unity.Interception.dll
 d:\用户目录\我的文档\visual studio 2013\Projects\mustgrip\Common\obj\Debug\Common.dll
 d:\用户目录\我的文档\visual studio 2013\Projects\mustgrip\Common\obj\Debug\Common.pdb
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache

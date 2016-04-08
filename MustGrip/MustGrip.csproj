@@ -57,6 +57,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="js\jquery.pagination.js" />
+    <Content Include="js\jquery.tmpl.min.js" />
     <Content Include="MustGrip.Master" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="Handle\MustGripHandle.ashx" />

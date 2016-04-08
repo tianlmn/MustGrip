@@ -75,22 +75,30 @@ namespace Data
         #endregion
 
 
-        public static List<PassageEntity> GetEntity(int passageId)
+        public static List<PassageEntity> GetPassageEntityList(PassageEntity condition)
         {
             var result = new List<PassageEntity>();
-            string sql = @"SELECT [PassageId]
+            StringBuilder sql = new StringBuilder();
+            sql.Append(@" SELECT [PassageId]
       ,[Path]
       ,[Title]
       ,[Author]
       ,[Type]
       ,[DataChange_LastTime]
       ,[DataChange_CreateTime]
+,Summary
   FROM [qds113752475_db].[dbo].[BgPassage] bp(NOLOCK)
-  WHERE bp.PassageId=@PassageId";
+  WHERE 1=1 ");
 
-            SqlParameter[] paramList = new SqlParameter[] { new SqlParameter("@PassageId", passageId) };
+            var paramList = new List<SqlParameter>();
+            if (condition != null && condition.PassageId > 0)
+            {
+                sql.Append(@" AND bp.PassageId=@PassageId ");
+                paramList.Add(new SqlParameter("@PassageId", condition.PassageId));
+            }
+            
             var dbhelper = new MDBHelper(DBConnectionString.DB1);
-            var dt = dbhelper.ExecuteDataTable(sql,CommandType.Text, paramList);
+            var dt = dbhelper.ExecuteSql(sql.ToString(),paramList);
             if (dt != null)
             {
                 foreach (DataRow dr in dt.Rows)
@@ -99,10 +107,11 @@ namespace Data
                     entity.PassageId = (int)dr["PassageId"];
                     entity.Path = (string)dr["Path"];
                     entity.Title = (string)dr["Title"];
-                    entity.Type = (int)dr["Type"];
+                    entity.Type = Convert.ToInt32(dr["Type"]);
                     entity.Author = (string)dr["Author"];
                     entity.DataChange_LastTime = (DateTime)dr["Datachange_LastTime"];
                     entity.DataChange_CreateTime = (DateTime)dr["Datachange_CreateTime"];
+                    entity.Summary = Convert.ToString(dr["Summary"]);
                     result.Add(entity);
                 }
             }

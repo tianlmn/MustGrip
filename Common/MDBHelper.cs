@@ -88,6 +88,25 @@ namespace Common
             return data;
         }
 
+        public DataTable ExecuteSql(string sql, List<SqlParameter> paramList)
+        {
+            DataTable dt = new DataTable();
+            if (paramList != null && paramList.Count == 0)
+            {
+                SqlParameter[] pp = new SqlParameter[paramList.Count];
+                for (int i = 0; i < paramList.Count; i++)
+                {
+                    pp[i] = paramList[i];
+                }
+                dt = ExecuteDataTable(sql, CommandType.Text, pp);
+            }
+            else
+            {
+                dt = ExecuteDataTable(sql);
+            }
+            return dt;
+        }
+
         /// <summary>
         /// 返回一个SqlDataReader对象的实例
         /// </summary>

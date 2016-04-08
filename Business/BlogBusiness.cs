@@ -13,7 +13,7 @@ namespace Business
     {
         public static int SavePassage(PassageEntity entity,string rootpath)
         {
-            var pl = BlogData.GetEntity(entity.PassageId);
+            var pl = BlogData.GetPassageEntityList(entity);
             string filename = Guid.NewGuid().ToString();
             entity.Path = rootpath + "\\" + filename + ".html";
             WriteFile(entity.Content, entity.Path);
@@ -28,6 +28,10 @@ namespace Business
             }
             return 0;
         }
+
+
+
+
 
         /// <summary>
         /// 写入XML方法
@@ -57,6 +61,12 @@ namespace Business
             sr.Close();
             fs.Close();
             return sb.ToString();
+        }
+
+        public static List<PassageEntity> GetPassageList(PassageEntity condition)
+        {
+            return BlogData.GetPassageEntityList(condition);
+
         }
     }
 }
