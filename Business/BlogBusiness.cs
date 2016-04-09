@@ -16,13 +16,14 @@ namespace Business
             var pl = BlogData.GetPassageEntityList(entity);
             string filename = Guid.NewGuid().ToString();
             entity.Path = rootpath + "\\" + filename + ".html";
+            entity.DataChange_CreateTime = DateTime.Now;
+            entity.DataChange_LastTime = DateTime.Now;
             WriteFile(entity.Content, entity.Path);
-            if (pl != null && pl.Count > 0)
+            if (entity.PassageId>0)
             {
-                entity.PassageId = pl[0].PassageId;
                 BlogData.UpdateEntity(entity);
             }
-            else
+            else if(entity.PassageId==0)
             {
                 BlogData.InsertEntity(entity);
             }
@@ -66,7 +67,6 @@ namespace Business
         public static List<PassageEntity> GetPassageList(PassageEntity condition)
         {
             return BlogData.GetPassageEntityList(condition);
-
         }
     }
 }

@@ -26,33 +26,26 @@ var indexInit = function () {
 
 //文章列表页js
 var plInit = function () {
-    var PAGESIZE = 100;
-    var IsNeedSearch = true;
+    var PAGESIZE = 4;
     var CurrentPage = 1;
+    var AllPassageList;
     $(".menu li:eq(1)").addClass("on");
-    $("#btnSearch").click(function () {
-        pageCallback(0);
-    });
     $("#btnGoToPage").click(function () {
         var p = $("#targetPage").val();
         pageCallback(p - 1);
     });
 
     var getPassageList = function () {
+        var data = {};
         $.ajax({
             url: ajaxUrl,
             type: "get",
             dataType: "json",
-            data: { f: "GetPassageList",data:"" },
+            data: { f: "GetPassageList", data: JSON.stringify(data) },
             success: function (jsonData) {
-                IsNeedSearch = false;
-                initPage(jsonData.result.TotalCount);
-                $("#passageList ul").empty();
-
                 if (jsonData.success) {
-                    $(".passageList ul").append($(".tmplPassageList").tmpl(jsonData.result.PassageList));
-                } else {
-                    IsNeedSearch = true;
+                    AllPassageList = jsonData.result.PassageList;
+                    initPage(AllPassageList.length);
                 }
             }
         });
@@ -71,11 +64,9 @@ var plInit = function () {
 
     var pageCallback = function (index, jq) {
         CurrentPage = index + 1;
-        if (IsNeedSearch) {
-            getPassageList();
-        } else {
-            IsNeedSearch = true;
-        }
+        $("#passageList ul").empty();
+        $("#passageList ul").append($(".tmplPassageList").tmpl(AllPassageList.slice(index * PAGESIZE, CurrentPage * PAGESIZE)));
+        $("#targetPage").val(CurrentPage);
         return false;
     };
 
@@ -84,16 +75,18 @@ var plInit = function () {
 
 //文章编辑页js
 var peInit = function () {
-
+    $(".menu li:eq(1)").addClass("on");
     $("#btnSavePassage").on("click", function () {
         var data = {};
         data.Title = $("#txtptitle").val();
         data.Author = "肖斐";
         data.Type = 1;
-        data.content = getContentHtml();
+        var html = $('.pcontent').find('iframe').contents().find('body').html();
+        data.content = Util.htmlEncodeByRegExp(html);
         data.PassageId = 0;
+        data.Summary = $(".txtSummary").val();
         $.ajax({
-            url: "~/Handle/MustGripHandle.ashx",
+            url: ajaxUrl,
             data: { data: JSON.stringify(data), f: "SavePassage" },
             dataType: "json",
             type: "POST",
@@ -102,38 +95,35 @@ var peInit = function () {
             }
 
         });
-
+        
     });
+    
+    //初始化html编辑器
+    $("#txtContent").cleditor({height:350});
+}
 
-    //编辑器初始化
-    $d = $("#txtpcontent")[0].contentWindow.document; // IE、FF都兼容
-    $d.designMode = "on";
-    $d.contentEditable = true;
-    $d.open();
-    $d.close();
+var ppInit = function () {
+    $(".menu li:eq(1)").addClass("on");
+    var pid = Util.getParam("pid");
+    if (pid != null) {
+        var data = {};
+        data.PassageId = pid;
+        $.ajax({
+            url: ajaxUrl,
+            data: { f: "GetPassage", data: JSON.stringify(data) },
+            type: "get",
+            dataType: "json",
+            success: function (jsonData) {
+                if (jsonData != null && jsonData.success == 1) {
+                    $(".ptitle").html(jsonData.result.passage.Title);
 
-    $('#btnInsertImage').click(function () {
-        // 在iframe中插入一张图片                                    
-        var img = '<img src="' + $('.txtppath').val() + '" />';
-        $("body", $d).append(img);
-    });
-    var getContentHtml = function () {
-        var html = $('#txtpcontent').contents().find('body').html();
-        return Util.htmlEncodeByRegExp(html);
+                    var htmlcontent = Util.htmlDecodeByRegExp(jsonData.result.content);
+                    $('.pcontent').find('iframe').contents().find('body').html(htmlcontent);
+                }
+            }
+        });
     }
 
-    //test
-    $.ajax({
-        url: ajaxUrl,
-        data: { f: "ReadPassage" },
-        dataType: "json",
-        type: "post",
-        success: function (data) {
-            var content = Util.htmlDecodeByRegExp(data.msg);
-            $('#txtpcontent').contents().find('body').html(content);
-        }
-
-    });
 }
 
 //工具类
@@ -188,7 +178,12 @@ var Util = {
         //获取带"/"的项目名，如：/uimcardprj
         this.projectName = this.pathName.substring(0, this.pathName.substr(1).indexOf('/') + 1);
         this.rootPath = this.localhostPath + this.projectName;
+    },
+
+    initIframe: function (select) {
+       //使用插件。。。html编辑器实在是搞不定，一个简单的替换<br />都比想象的要复杂得多
     }
+
 
 };
 

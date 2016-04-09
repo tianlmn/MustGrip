@@ -26,6 +26,7 @@ namespace MustGrip.Handle
             string data = context.Request.Params["data"];
             string f = context.Request.Params["f"];
             JavaScriptSerializer json = new JavaScriptSerializer();
+            List<PassageEntity> pList;
             string response = string.Empty;
             switch (f)
             {
@@ -34,9 +35,22 @@ namespace MustGrip.Handle
                     response = json.Serialize(new { success = 1, msg = "success" });
                     break;
                 case "GetPassageList":
-                    List<PassageEntity> pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data));
-                    response = json.Serialize(new { success = 1, result = new{PassageList=pList,Total=1} });
+                    pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data));
+                    response = json.Serialize(new { success = 1, result = new{PassageList=pList} });
                     break;
+                case "GetPassage":
+                    pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data));
+                    if (pList != null && pList.Count > 0)
+                    {
+                        var htmlcontent = BlogBusiness.ReadFile(pList[0].Path);
+                        response = json.Serialize(new { success = 1, result = new { content = htmlcontent, passage = pList[0] } });
+                    }
+                    else
+                    {
+                        response = json.Serialize(new { success = 0, msg = "文章内容被删除" });
+                    }
+                    break;
+
             }
             
             context.Response.ContentType = "application/json";

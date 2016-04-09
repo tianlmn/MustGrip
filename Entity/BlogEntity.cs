@@ -25,6 +25,10 @@ namespace Entity
 
         public DateTime DataChange_CreateTime { get; set; }
 
+        public string CreateTime { get; set; }
+
+        public string ChangeTime { get; set; }
+
         public string Summary { get; set; }
     }
 

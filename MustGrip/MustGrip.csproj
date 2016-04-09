@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\pagination.css" />
     <Content Include="js\jquery.pagination.js" />
     <Content Include="js\jquery.tmpl.min.js" />
     <Content Include="MustGrip.Master" />
@@ -76,9 +77,15 @@
     <Content Include="Index.aspx" />
     <Content Include="js\app.js" />
     <Content Include="js\jquery-1.12.2.js" />
+    <Content Include="Passage\Passage.aspx" />
     <Content Include="Passage\PassageEdit.aspx" />
     <Content Include="Passage\PassageList.aspx" />
     <Content Include="Passage\wenzhang.html" />
+    <Content Include="Plugin\CLEditor1_4_5\images\buttons.gif" />
+    <Content Include="Plugin\CLEditor1_4_5\images\toolbar.gif" />
+    <Content Include="Plugin\CLEditor1_4_5\jquery.cleditor.css" />
+    <Content Include="Plugin\CLEditor1_4_5\jquery.cleditor.js" />
+    <Content Include="Plugin\CLEditor1_4_5\jquery.cleditor.min.js" />
     <Content Include="resource\img\dot_16.ico" />
     <Content Include="resource\img\fengche.jpg" />
     <Content Include="resource\img\nav_1.jpg" />
@@ -112,6 +119,13 @@
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Passage\Passage.aspx.cs">
+      <DependentUpon>Passage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Passage\Passage.aspx.designer.cs">
+      <DependentUpon>Passage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Passage\PassageEdit.aspx.cs">
       <DependentUpon>PassageEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

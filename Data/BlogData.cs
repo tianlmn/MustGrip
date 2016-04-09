@@ -87,6 +87,7 @@ namespace Data
       ,[DataChange_LastTime]
       ,[DataChange_CreateTime]
 ,Summary
+,ROW_NUMBER() OVER (ORDER BY DataChange_CreateTime DESC) AS rn
   FROM [qds113752475_db].[dbo].[BgPassage] bp(NOLOCK)
   WHERE 1=1 ");
 
@@ -112,6 +113,8 @@ namespace Data
                     entity.DataChange_LastTime = (DateTime)dr["Datachange_LastTime"];
                     entity.DataChange_CreateTime = (DateTime)dr["Datachange_CreateTime"];
                     entity.Summary = Convert.ToString(dr["Summary"]);
+                    entity.CreateTime = entity.DataChange_CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                    entity.ChangeTime = entity.DataChange_LastTime.ToString("yyyy-MM-dd HH:mm:ss");
                     result.Add(entity);
                 }
             }
@@ -128,7 +131,8 @@ namespace Data
                 new SqlParameter("@Path", entity.Path??string.Empty),
                 new SqlParameter("@Title", entity.Title??string.Empty),
                 new SqlParameter("@Type", entity.Type),
-                //new SqlParameter("@Author", entity.Author??string.Empty)
+                //new SqlParameter("@Author", entity.Author??string.Empty),
+                new SqlParameter("@Summary", entity.Summary??string.Empty)
             };
             dbhelper.ExecuteNonQuery("spA_BgPassage_u", CommandType.StoredProcedure, paramList);
         }
@@ -142,7 +146,8 @@ namespace Data
                 new SqlParameter("@Path", entity.Path??string.Empty),
                 new SqlParameter("@Title", entity.Title??string.Empty),
                 new SqlParameter("@Type", entity.Type),
-                new SqlParameter("@Author", entity.Author??string.Empty)
+                new SqlParameter("@Author", entity.Author??string.Empty),
+                new SqlParameter("@Summary", entity.Summary??string.Empty)
             };
             dbhelper.ExecuteNonQuery("spA_BgPassage_i", CommandType.StoredProcedure, paramList);
         }

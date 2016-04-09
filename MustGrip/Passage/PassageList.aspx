@@ -7,17 +7,18 @@
         <div>
             <a href="/Passage/PassageEdit.aspx" type="button">新增</a>
         </div>
-        <div class="passageList">
+        <div id="passageList">
             <ul>
             </ul>
+            <div class="pagination" style="float: right; margin-top: 10px;">
+                <span id="Pagination"></span>
+                <span id="pageCount"></span><span>到第</span>
+                <input type="text" id="targetPage" class="text-small" onkeyup="value=value.replace(/[^\d]/g,'');" />
+                <span>页</span>
+                <input type="button" id="btnGoToPage" value="确定" />
+            </div>
         </div>
-        <div class="pagination" style="float: right; margin-top: 10px;">
-        <span id="Pagination"></span>
-        <span id="pageCount"></span><span>到第</span>
-        <input type="text" id="targetPage" class="text-small" onkeyup="value=value.replace(/[^\d]/g,'');" />
-        <span>页</span>
-        <input type="button" id="btnGoToPage" value="确定" />
-    </div>
+        
     </div>
     <div id="footer" class="clear">
         <p>
@@ -30,11 +31,11 @@
         <li>
             <div class="lihead">${CreateTime}</div>
             <div class="libody break">
-                <h2>${PassageName}</h2>
-                <small>${Author}</small>
+                <h2>${Title}</h2>
+                <small>作者:${Author}</small>
                 <div>
-                    <p>${Summary}</p>
-                    <p><a href="###">阅读全文</a></p>
+                    <h3>${Summary}</h3>
+                    <h4><a href="Passage.aspx?pid=${PassageId}">阅读全文</a></h4>
                 </div>
             </div>
         </li>
@@ -44,7 +45,7 @@
     <script src="../js/jquery.pagination.js"></script>
     <script src="../js/jquery.tmpl.min.js"></script>
     <script src="../js/app.js"></script>
-    
+
     <script>
         plInit();
     </script>

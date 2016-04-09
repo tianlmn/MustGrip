@@ -91,7 +91,7 @@ namespace Common
         public DataTable ExecuteSql(string sql, List<SqlParameter> paramList)
         {
             DataTable dt = new DataTable();
-            if (paramList != null && paramList.Count == 0)
+            if (paramList != null && paramList.Count > 0)
             {
                 SqlParameter[] pp = new SqlParameter[paramList.Count];
                 for (int i = 0; i < paramList.Count; i++)
