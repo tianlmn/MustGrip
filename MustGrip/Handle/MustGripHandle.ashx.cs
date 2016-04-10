@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -15,13 +16,13 @@ namespace MustGrip.Handle
     /// </summary>
     public class MustGripHandle : IHttpHandler, IRequiresSessionState
     {
-        public string PassageRootPath;
+        
+
         public void ProcessRequest(HttpContext context)
         {
-            if (string.IsNullOrEmpty(PassageRootPath))
-            {
-                PassageRootPath = context.Server.MapPath("/PassageRootPath");
-            }
+            string blogFileTempPath = ConfigurationManager.AppSettings["BlogFileTempPath"];
+            string serverRootPath = context.Server.MapPath("/");
+            
 
             string data = context.Request.Params["data"];
             string f = context.Request.Params["f"];
@@ -31,15 +32,15 @@ namespace MustGrip.Handle
             switch (f)
             {
                 case "SavePassage":
-                    BlogBusiness.SavePassage(json.Deserialize<PassageEntity>(data), PassageRootPath);
+                    BlogBusiness.SavePassage(json.Deserialize<PassageEntity>(data), serverRootPath, blogFileTempPath);
                     response = json.Serialize(new { success = 1, msg = "success" });
                     break;
                 case "GetPassageList":
-                    pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data));
+                    pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data), serverRootPath);
                     response = json.Serialize(new { success = 1, result = new{PassageList=pList} });
                     break;
                 case "GetPassage":
-                    pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data));
+                    pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data), serverRootPath);
                     if (pList != null && pList.Count > 0)
                     {
                         var htmlcontent = BlogBusiness.ReadFile(pList[0].Path);
@@ -50,6 +51,9 @@ namespace MustGrip.Handle
                         response = json.Serialize(new { success = 0, msg = "文章内容被删除" });
                     }
                     break;
+                case "BgMessageBusiness":
+                    var userList = GetPassageEntityList()
+                    BgMessageBusiness.PostMessage(json.Deserialize<BgMessageEntity>(data));
 
             }
             

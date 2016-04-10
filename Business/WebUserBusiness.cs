@@ -10,9 +10,26 @@ namespace Business
 {
     public class WebUserBusiness
     {
-        public static List<WebUserEntity> GetWebUserEntityList()
+        public static int WriteWebUserEntity(WebUserEntity entity)
         {
-            return new List<WebUserEntity>();
+            int userId = 0;
+            var userList = GetWebUserEntityList(entity);
+            if (userList != null && userList.Count > 0)
+            {
+                entity.UserId = userList[0].UserId;
+                WebUserData.Update(entity);
+                userId = entity.UserId;
+            }
+            else
+            {
+                WebUserData.Insert(entity);
+            }
+            return userId;
+        }
+
+        public static List<WebUserEntity> GetWebUserEntityList(WebUserEntity entity)
+        {
+            return WebUserData.GetPassageEntityList(entity);
         }
 
     }

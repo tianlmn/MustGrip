@@ -113,8 +113,8 @@ namespace Data
                     entity.DataChange_LastTime = (DateTime)dr["Datachange_LastTime"];
                     entity.DataChange_CreateTime = (DateTime)dr["Datachange_CreateTime"];
                     entity.Summary = Convert.ToString(dr["Summary"]);
-                    entity.CreateTime = entity.DataChange_CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                    entity.ChangeTime = entity.DataChange_LastTime.ToString("yyyy-MM-dd HH:mm:ss");
+                    entity.CreateTime = entity.DataChange_CreateTime.ToString("yyyy年MM月dd日 HH:mm:ss");
+                    entity.ChangeTime = entity.DataChange_LastTime.ToString("yyyy年MM月dd HH:mm:ss");
                     result.Add(entity);
                 }
             }

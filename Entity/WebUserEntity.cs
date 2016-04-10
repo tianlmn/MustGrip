@@ -16,6 +16,8 @@ namespace Entity
 
         public string Password { get; set; }
 
+        public string WebAddress { get; set; }
+
         public DateTime DataChange_LastTime { get; set; }
 
         public DateTime DataChange_CreateTime { get; set; }

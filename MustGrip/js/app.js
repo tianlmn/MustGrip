@@ -104,10 +104,14 @@ var peInit = function () {
 
 var ppInit = function () {
     $(".menu li:eq(1)").addClass("on");
+    
+
+
     var pid = Util.getParam("pid");
-    if (pid != null) {
+    if (!!pid) {
         var data = {};
         data.PassageId = pid;
+        $("#txtRPassageId").val(pid);
         $.ajax({
             url: ajaxUrl,
             data: { f: "GetPassage", data: JSON.stringify(data) },
@@ -115,10 +119,36 @@ var ppInit = function () {
             dataType: "json",
             success: function (jsonData) {
                 if (jsonData != null && jsonData.success == 1) {
+                    //加载内容
                     $(".ptitle").html(jsonData.result.passage.Title);
-
                     var htmlcontent = Util.htmlDecodeByRegExp(jsonData.result.content);
                     $('.pcontent').find('iframe').contents().find('body').html(htmlcontent);
+
+                    //加载回复内容
+                    
+
+                    //加载回复面板
+                    $("#btnRCommit").on("click", function() {
+                        var data = {};
+                        data.Author = $.trim($("#txtRAuthor").val());
+                        data.PassageId = $.trim($("#txtRPassageId").val());
+                        data.Message = $.trim($("#txtRContent").val());
+                        data.Email = $.trim($("#txtREmail").val());
+                        data.WebAddress = $.trim($("#txtRWeb").val());
+                        data.MasterMessageId = $.trim($("#txtRMasterMessageId").val());
+                        data.PRankId = $.trim($("#txtRPRank").val());
+
+                        $.ajax({
+                            url: ajaxUrl,
+                            type: "post",
+                            data: { f: "PostMessage", data: JSON.stringify(data) },
+                            dataType: "json",
+                            success: function() {
+                                
+                            }
+
+                        });
+                    });
                 }
             }
         });
@@ -181,7 +211,7 @@ var Util = {
     },
 
     initIframe: function (select) {
-       //使用插件。。。html编辑器实在是搞不定，一个简单的替换<br />都比想象的要复杂得多
+        //使用插件。。。html编辑器实在是搞不定，一个简单的替换<br />都比想象的要复杂得多
     }
 
 

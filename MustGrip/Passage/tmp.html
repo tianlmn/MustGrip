@@ -1,46 +1,30 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>KF富文本编辑器</title>
-<script type="text/javascript" src="../js/jquery-1.12.2.js">
-</script>
-<script type="text/javascript">
-$(function(){
-    $d = $("#editor")[0].contentWindow.document; // IE、FF都兼容
-    $d.designMode="on";
-    $d.contentEditable= true;
-    $d.open();
-    $d.close();
-    $("body", $d).append("<div>A</div><div>B</div><div>C</div>");
-    
-    $('#insert_img').click(function(){
-        // 在iframe中插入一张图片                                    
-        var img = '<img src="' + $('#path').val() +'" />';
-        $("body", $d).append(img);
-    });
-    
-    $('#preview').click(function(){
-        // 获取iframe的body内容，用于显示或者插入到数据库
-        alert($('#editor').contents().find('body').html());
-        $('#preview_area').html($('#editor').contents().find('body').html());
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>KF富文本编辑器</title>
 
-    });
-});
-
-</script>
 
 </head>
 
 <body>
 
+    <div id="tmpl"></div>
+    <script id="tmpl1" type="text/x-jquery-tmpl">
+        <div style="margin-bottom:10px;">
+            <span>${ID}</span>
+            <span style="margin-left:10px;">{{tmpl($data) '#tmpl2'}}</span>
+        </div>
+    </script>
+    <script id="tmpl2" type="type/x-jquery-tmpl">
+        {{each Name}}{{= $value}}  {{/each}}
+    </script>
 
-<p><iframe id="editor" width="600px" height="200px" style="border:solid 1px;"></iframe></p>
-<input type="text" id="path" value="http://www.google.com.hk/intl/zh-CN/images/logo_cn.png"/>
-<input type="button" id="insert_img" value="插入图片" />
-<input type="button" id="preview" value="预览" />
-
-<p style="border: 1px dashed #ccc;" id="preview_area"></p>
-
+    <script type="text/javascript" src="../js/jquery-1.12.2.js"></script>
+    <script type="text/javascript" src="../js/jquery.tmpl.min.js"></script>
+    <script type="text/javascript">
+        var users = [{ ID: 'think8848', Name: ['Joseph', 'Chan'] }, { ID: 'aCloud', Name: ['Mary', 'Cheung'] }];
+        $("#tmpl1").tmpl(users).appendTo('#tmpl');
+    </script>
 </body>
 </html>

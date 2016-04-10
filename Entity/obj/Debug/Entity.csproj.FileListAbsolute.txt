@@ -2,4 +2,3 @@ d:\用户目录\我的文档\visual studio 2013\Projects\mustgrip\Entity\bin\Deb
 d:\用户目录\我的文档\visual studio 2013\Projects\mustgrip\Entity\bin\Debug\Entity.pdb
 d:\用户目录\我的文档\visual studio 2013\Projects\mustgrip\Entity\obj\Debug\Entity.dll
 d:\用户目录\我的文档\visual studio 2013\Projects\mustgrip\Entity\obj\Debug\Entity.pdb
-D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache

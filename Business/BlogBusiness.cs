@@ -11,14 +11,14 @@ namespace Business
 {
     public class BlogBusiness
     {
-        public static int SavePassage(PassageEntity entity,string rootpath)
+        public static int SavePassage(PassageEntity entity,string serverRootPath,string fileTempPath)
         {
             var pl = BlogData.GetPassageEntityList(entity);
             string filename = Guid.NewGuid().ToString();
-            entity.Path = rootpath + "\\" + filename + ".html";
+            entity.Path = fileTempPath + "\\" + filename + ".html";
             entity.DataChange_CreateTime = DateTime.Now;
             entity.DataChange_LastTime = DateTime.Now;
-            WriteFile(entity.Content, entity.Path);
+            WriteFile(entity.Content, serverRootPath+entity.Path);
             if (entity.PassageId>0)
             {
                 BlogData.UpdateEntity(entity);
@@ -64,9 +64,11 @@ namespace Business
             return sb.ToString();
         }
 
-        public static List<PassageEntity> GetPassageList(PassageEntity condition)
+        public static List<PassageEntity> GetPassageList(PassageEntity condition, string serverRootPath)
         {
-            return BlogData.GetPassageEntityList(condition);
+            var plist = BlogData.GetPassageEntityList(condition);
+            plist.ForEach(p => p.Path = serverRootPath + p.Path);
+            return plist;
         }
     }
 }

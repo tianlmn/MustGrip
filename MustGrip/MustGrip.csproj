@@ -80,6 +80,7 @@
     <Content Include="Passage\Passage.aspx" />
     <Content Include="Passage\PassageEdit.aspx" />
     <Content Include="Passage\PassageList.aspx" />
+    <Content Include="Passage\tmp.html" />
     <Content Include="Passage\wenzhang.html" />
     <Content Include="Plugin\CLEditor1_4_5\images\buttons.gif" />
     <Content Include="Plugin\CLEditor1_4_5\images\toolbar.gif" />
