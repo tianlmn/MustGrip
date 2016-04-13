@@ -134,7 +134,7 @@ namespace Data
                 //new SqlParameter("@Author", entity.Author??string.Empty),
                 new SqlParameter("@Summary", entity.Summary??string.Empty)
             };
-            dbhelper.ExecuteNonQuery("spA_BgPassage_u", CommandType.StoredProcedure, paramList);
+            dbhelper.ExecuteProc("spA_BgPassage_u", paramList);
         }
 
         public static void InsertEntity(PassageEntity entity)
@@ -149,7 +149,7 @@ namespace Data
                 new SqlParameter("@Author", entity.Author??string.Empty),
                 new SqlParameter("@Summary", entity.Summary??string.Empty)
             };
-            dbhelper.ExecuteNonQuery("spA_BgPassage_i", CommandType.StoredProcedure, paramList);
+            dbhelper.ExecuteProc("spA_BgPassage_i", paramList);
         }
     }
 }

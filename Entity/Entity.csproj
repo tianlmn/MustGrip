@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="BgMessageEntity.cs" />
     <Compile Include="BlogEntity.cs" />
-    <Compile Include="WebUserEntity.cs" />
+    <Compile Include="BgUserEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

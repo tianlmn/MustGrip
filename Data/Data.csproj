@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="BgMessageData.cs" />
     <Compile Include="BlogData.cs" />
-    <Compile Include="WebUserData.cs" />
+    <Compile Include="BgUserData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

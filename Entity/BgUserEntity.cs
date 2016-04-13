@@ -9,37 +9,27 @@ namespace Entity
     /// <summary>
     /// 
     /// </summary>
-    public class BgMessageEntity
+    public class BgUserEntity
     {
         /// <summary>
         /// 
         /// </summary>
-        public int BgMessageId { get; set; }
+        public int BgUserId { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public int PassageId { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public int MasterMessageId { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public int PRankId { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Author { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Message { get; set; }
+        public string WebAddress { get; set; }
 
         /// <summary>
         /// 
@@ -50,10 +40,6 @@ namespace Entity
         /// 
         /// </summary>
         public DateTime DataChange_CreateTime { get; set; }
-
-        public string ChangeTime { get; set; }
-
-        public string CreateTime { get; set; }
     }
 
 }

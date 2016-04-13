@@ -15,5 +15,11 @@ namespace Business
         {
             BgMessageData.Insert(entity);
         }
+
+
+        public static List<BgMessageEntity> GetMessageList(BgMessageEntity entity)
+        {
+            return BgMessageData.GetBgMessageEntityListByPassageId(entity.PassageId);
+        }
     }
 }

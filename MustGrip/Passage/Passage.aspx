@@ -14,30 +14,31 @@
             </div>
             <div class="pcommentList">
                 <ul>
+                    
                 </ul>
             </div>
             <div class="preply">
                 <h3>发表评论:(目前n条评论)</h3>
                 <p>
                     <input type="text" id="txtRAuthor" />
-                    <label for="txtRAuthor"></label>
+                    <label for="txtRAuthor"><span style="color: red">*</span></label>
                 </p>
                 <p>
                     <input type="text" id="txtREmail" />
-                    <label for="txtREmail"></label>
+                    <label for="txtREmail">(<span style="color: red">*</span>)</label>
                 </p>
                 <p>
                     <input type="text" id="txtRWeb" />
-                    <label for="txtRWeb"></label>
+                    <label for="txtRWeb">你的网站(选填)</label>
                 </p>
                 <p>
-                    <textarea id="txtRContent" cols="100%" rows="10" />
-                    <label for="txtRContent"></label>
+                    <textarea id="txtRContent" cols="100%" rows="10" > </textarea>
+                    <label for="txtRContent">评论</label>
                 </p>
                 <p>
                     <input type="button" value="提交" id="btnRCommit" />
-                    <input type="hidden" id="txtRMasterMessageId" />
-                    <input type="hidden" id="txtRPRank" />
+                    <input type="hidden" id="txtRMasterMessageId" value="0" />
+                    <input type="hidden" id="txtRPRank" value="0" />
                 </p>
             </div>
         </div>
@@ -64,9 +65,9 @@
             <div>
                 <span><a href="###">回复:</a></span>
             </div>
-            <ul>
+<%--            <ul>
                 {{tmpl($data.ReplyList) "#tmplMessageDepth2"}}
-            </ul>
+            </ul>--%>
         </li>
     </script>
     <script type="text/x-jquery-tmpl" id="tmplMessageDepth2">
@@ -108,6 +109,7 @@
     </script>
 
     <script src="../js/jquery-1.12.2.js"></script>
+    <script src="../js/jquery.tmpl.min.js"></script>
     <script src="../js/app.js"></script>
     <script>
         ppInit();

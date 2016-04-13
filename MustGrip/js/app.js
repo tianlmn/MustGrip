@@ -104,55 +104,82 @@ var peInit = function () {
 
 var ppInit = function () {
     $(".menu li:eq(1)").addClass("on");
-    
+    var getPassage = function() {
+        if (!!pid) {
+            var data = {};
+            data.PassageId = pid;
+            $("#txtRPassageId").val(pid);
+            $.ajax({
+                url: ajaxUrl,
+                data: { f: "GetPassage", data: JSON.stringify(data) },
+                type: "get",
+                dataType: "json",
+                success: function (jsonData) {
+                    if (jsonData != null && jsonData.success == 1) {
+                        //加载内容
+                        $(".ptitle").html(jsonData.result.passage.Title);
+                        var htmlcontent = Util.htmlDecodeByRegExp(jsonData.result.content);
+                        $('.pcontent').find('iframe').contents().find('body').html(htmlcontent);
 
+                        //加载回复内容
+
+
+                        //加载回复面板
+                        $("#btnRCommit").on("click", function () {
+                            var data = {};
+                            data.PassageId = $.trim($("#txtRPassageId").val());
+                            data.Message = $.trim($("#txtRContent").val());
+                            data.MasterMessageId = $.trim($("#txtRMasterMessageId").val());
+                            data.PRankId = $.trim($("#txtRPRank").val());
+
+
+                            var userdata = {};
+                            userdata.Name = $.trim($("#txtRAuthor").val());
+                            userdata.Email = $.trim($("#txtREmail").val());
+                            userdata.WebAddress = $.trim($("#txtRWeb").val());
+
+                            $.ajax({
+                                url: ajaxUrl,
+                                type: "post",
+                                data: { f: "PostMessage", data: JSON.stringify(data), userdata: JSON.stringify(userdata) },
+                                dataType: "json",
+                                success: function (jsonData) {
+                                    if (!!jsonData && jsonData.success == 1) {
+                                        alert(jsonData.msg);
+                                    }
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+        }
+    }
+    var getMessage = function() {
+        if (!!pid) {
+            var data = {};
+            data.PassageId = pid;
+
+            $.ajax({
+                url: ajaxUrl,
+                data: { f: "GetMessage", data: JSON.stringify(data) },
+                dataType: "json",
+                type: "post",
+                success: function (jsonData) {
+                    if (jsonData != null && jsonData.success == 1) {
+                        var d = jsonData.result.MessageList;
+                        $("#tmplMessageDepth1").tmpl(d).appendTo(".pcommentList ul");
+                    }
+                    
+                }
+            });
+        }
+    }
 
     var pid = Util.getParam("pid");
-    if (!!pid) {
-        var data = {};
-        data.PassageId = pid;
-        $("#txtRPassageId").val(pid);
-        $.ajax({
-            url: ajaxUrl,
-            data: { f: "GetPassage", data: JSON.stringify(data) },
-            type: "get",
-            dataType: "json",
-            success: function (jsonData) {
-                if (jsonData != null && jsonData.success == 1) {
-                    //加载内容
-                    $(".ptitle").html(jsonData.result.passage.Title);
-                    var htmlcontent = Util.htmlDecodeByRegExp(jsonData.result.content);
-                    $('.pcontent').find('iframe').contents().find('body').html(htmlcontent);
+    getPassage();
+    getMessage();
 
-                    //加载回复内容
-                    
-
-                    //加载回复面板
-                    $("#btnRCommit").on("click", function() {
-                        var data = {};
-                        data.Author = $.trim($("#txtRAuthor").val());
-                        data.PassageId = $.trim($("#txtRPassageId").val());
-                        data.Message = $.trim($("#txtRContent").val());
-                        data.Email = $.trim($("#txtREmail").val());
-                        data.WebAddress = $.trim($("#txtRWeb").val());
-                        data.MasterMessageId = $.trim($("#txtRMasterMessageId").val());
-                        data.PRankId = $.trim($("#txtRPRank").val());
-
-                        $.ajax({
-                            url: ajaxUrl,
-                            type: "post",
-                            data: { f: "PostMessage", data: JSON.stringify(data) },
-                            dataType: "json",
-                            success: function() {
-                                
-                            }
-
-                        });
-                    });
-                }
-            }
-        });
-    }
 
 }
 

@@ -204,37 +204,16 @@ namespace Common
         /// <summary>
         /// 对数据库进行增删改的操作
         /// </summary>
-        /// <param name="sql">要执行的sql命令</param>
-        /// <returns></returns>
-        public int ExecuteNonQuery(string sql)
-        {
-            return ExecuteNonQuery(sql, CommandType.Text, null);
-        }
-
-        /// <summary>
-        /// 数据库进行增删改的操作
-        /// </summary>
-        /// <param name="sql">对数据库进行操作的sql命令</param>
-        /// <param name="commandType">要执行查询语句的类型，如存储过程或者sql文本命令</param>
-        /// <returns></returns>
-        public int ExecuteNonQuery(string sql, CommandType commandType)
-        {
-            return ExecuteNonQuery(sql, commandType, null);
-        }
-
-        /// <summary>
-        /// 对数据库进行增删改的操作
-        /// </summary>
         /// <param name="sql">要执行的sql语句</param>
         /// <param name="commandType">要执行的查询语句类型，如存储过程或者sql文本命令</param>
         /// <param name="parameters">Transact-SQL语句或者存储过程的参数数组</param>
         /// <returns></returns>
-        public int ExecuteNonQuery(string sql, CommandType commandType, SqlParameter[] parameters)
+        public int ExecuteProc(string sql, SqlParameter[] parameters)
         {
             int count = 0;
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand(sql, con);
-            cmd.CommandType = commandType;
+            cmd.CommandType = CommandType.StoredProcedure;
             if (parameters != null)
             {
                 foreach (SqlParameter parameter in parameters)
@@ -247,6 +226,35 @@ namespace Common
             count = cmd.ExecuteNonQuery();
             con.Close();
             return count;
+        }
+
+        public int ExecuteProcWithOutput(string sql, SqlParameter[] parameters, SqlParameter outParam)
+        {
+            int output = 0;
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (parameters != null)
+            {
+                foreach (SqlParameter parameter in parameters)
+                {
+                    cmd.Parameters.Add(parameter);
+                }
+
+            }
+            if (outParam != null)
+            {
+                cmd.Parameters.Add(outParam);
+            }
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            if (outParam != null)
+            {
+                output = Convert.ToInt32(cmd.Parameters[outParam.ParameterName].Value.ToString());
+            }
+            con.Close();
+            return output;
         }
 
         /// <summary>

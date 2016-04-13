@@ -28,12 +28,13 @@ namespace MustGrip.Handle
             string f = context.Request.Params["f"];
             JavaScriptSerializer json = new JavaScriptSerializer();
             List<PassageEntity> pList;
+            List<BgMessageEntity> mList;
             string response = string.Empty;
             switch (f)
             {
                 case "SavePassage":
                     BlogBusiness.SavePassage(json.Deserialize<PassageEntity>(data), serverRootPath, blogFileTempPath);
-                    response = json.Serialize(new { success = 1, msg = "success" });
+                    response = json.Serialize(new { success = 1, msg = "保存文章成功" });
                     break;
                 case "GetPassageList":
                     pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data), serverRootPath);
@@ -51,9 +52,25 @@ namespace MustGrip.Handle
                         response = json.Serialize(new { success = 0, msg = "文章内容被删除" });
                     }
                     break;
-                case "BgMessageBusiness":
-                    var userList = GetPassageEntityList()
-                    BgMessageBusiness.PostMessage(json.Deserialize<BgMessageEntity>(data));
+                case "PostMessage":
+                    var sUserData = context.Request.Params["userdata"];
+                    var userid = BgUserBusiness.WriteBgUserEntity(json.Deserialize<BgUserEntity>(sUserData));
+                    if (userid > 0)
+                    {
+                        var messageEntity = json.Deserialize<BgMessageEntity>(data);
+                        messageEntity.Author = userid;
+                        BgMessageBusiness.PostMessage(messageEntity);
+                        response = json.Serialize(new { success = 1, msg = "留言成功" });
+                    }
+                    else
+                    {
+                        response = json.Serialize(new { success = 0, msg = "用户名异常" });
+                    }
+                    break;
+                case "GetMessage":
+                    mList = BgMessageBusiness.GetMessageList(json.Deserialize<BgMessageEntity>(data));
+                    response = json.Serialize(new { success = 1, result = new { MessageList = mList } });
+                    break;
 
             }
             

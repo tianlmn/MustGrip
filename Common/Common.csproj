@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonFunc.cs" />
     <Compile Include="DataBaseTransaction.cs" />
     <Compile Include="DBConnectionString.cs" />
     <Compile Include="DBHelper.cs" />
