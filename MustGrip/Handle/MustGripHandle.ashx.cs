@@ -27,6 +27,7 @@ namespace MustGrip.Handle
             string data = context.Request.Params["data"];
             string f = context.Request.Params["f"];
             JavaScriptSerializer json = new JavaScriptSerializer();
+            PassageEntity pEntity;
             List<PassageEntity> pList;
             List<BgMessageEntity> mList;
             string response = string.Empty;
@@ -41,11 +42,13 @@ namespace MustGrip.Handle
                     response = json.Serialize(new { success = 1, result = new{PassageList=pList} });
                     break;
                 case "GetPassage":
-                    pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data), serverRootPath);
+                    pEntity = json.Deserialize<PassageEntity>(data);
+                    pList = BlogBusiness.GetPassageList(pEntity, serverRootPath);
                     if (pList != null && pList.Count > 0)
                     {
                         var htmlcontent = BlogBusiness.ReadFile(pList[0].Path);
-                        response = json.Serialize(new { success = 1, result = new { content = htmlcontent, passage = pList[0] } });
+                        mList = BgMessageBusiness.GetMessageListByPassageId(pEntity.PassageId);
+                        response = json.Serialize(new { success = 1, result = new { content = htmlcontent, passage = pList[0], messageList = mList } });
                     }
                     else
                     {
@@ -67,10 +70,7 @@ namespace MustGrip.Handle
                         response = json.Serialize(new { success = 0, msg = "用户名异常" });
                     }
                     break;
-                case "GetMessage":
-                    mList = BgMessageBusiness.GetMessageList(json.Deserialize<BgMessageEntity>(data));
-                    response = json.Serialize(new { success = 1, result = new { MessageList = mList } });
-                    break;
+
 
             }
             

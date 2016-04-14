@@ -50,7 +50,7 @@ body { background: url("/resource/img/bg/04.jpg");background-attachment: fixed;}
 
 
 #passage{ width: 70%;}
-#passage iframe{width:800px;background-color:transparent;overflow: auto;border: none;font-size: 16px;line-height: 50px;}
+#passage iframe{width: 100%;height: 100%;background-color:transparent;border: none;font-size: 16px;line-height: 50px;}
 #passage .ptitle{font-size: 30px;font-weight: bold;color: blue;margin: 0 0 20px -100px;text-align: center;}
 
 

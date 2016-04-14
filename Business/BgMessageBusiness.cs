@@ -17,9 +17,9 @@ namespace Business
         }
 
 
-        public static List<BgMessageEntity> GetMessageList(BgMessageEntity entity)
+        public static List<BgMessageEntity> GetMessageListByPassageId(int passageId)
         {
-            return BgMessageData.GetBgMessageEntityListByPassageId(entity.PassageId);
+            return BgMessageData.GetBgMessageEntityListByPassageId(passageId);
         }
     }
 }
