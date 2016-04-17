@@ -1,4 +1,4 @@
-body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div{margin:0;padding:0;border:0;} 
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,textarea{margin:0;padding:0;border:0;} 
 body{background:#fff;color:#333;font-size:12px; margin-top:5px;font-family:"SimSun","宋体","Arial Narrow";} 
  
 ul,ol{list-style-type:none;} 
@@ -52,7 +52,24 @@ body { background: url("/resource/img/bg/04.jpg");background-attachment: fixed;}
 #passage{ width: 70%;}
 #passage iframe{width: 100%;height: 100%;background-color:transparent;border: none;font-size: 16px;line-height: 50px;}
 #passage .ptitle{font-size: 30px;font-weight: bold;color: blue;margin: 0 0 20px -100px;text-align: center;}
+#passage input, #passage textarea{padding:4px; border:1px solid #7F9DB9; background-color:#fff;}
+#passage input:focus, #passage textarea:focus{border-color:#34538b; box-shadow:inset 0 1px #f0f3f9;}
+#passage input{width:250px; margin:5px 5px 1px 0;}
+#passage textarea {width:550px; height:140px; overflow:auto;margin:5px 0 0 0;}
+#passage #btnRCommit{width:100px; background-color:#f0f3f9; overflow:visible; cursor:pointer; box-shadow:1px 1px #AFC4EA,2px 2px #AFC4EA,3px 3px #AFC4EA; font-size:14px;}
+#passage #btnRCommit:hover{background-color:#EAEDF5;}
 
+#passage .pcommentList{width:90%; padding-left:25px;list-style-type:decimal}
+#passage .pcommentList li{margin:15px 0 10px; padding:5px 5px 10px 10px;border: 1px solid #afc4ea}
+#passage .pcommentList li ul li{margin-left:1em; background-color:#eee;}
+#passage .pcommentList p{margin:10px 5px 10px 0;word-wrap: break-word;}
+#passage .pcommentList li{font-size: 14px;font-weight:bold;}
+#passage .pcommentList li img{float:right; border:1px solid #eee;	padding:2px;background:#fff;}
+#passage .pcommentList cite, .pcommentList cite a {font-weight:bold;font-style:normal;}
+#passage .pcommentList p {font-weight:normal;line-height:1.5; text-transform:none;	}
+#passage .pcommentList .comment_time{color: #808080}
+#passage .preply{ padding-left: 25px;}
+#passage .preply small{ display: none;}
 
 #footer {text-align:center}
 #footer p{font-size:12px;}

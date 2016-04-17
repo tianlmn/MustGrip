@@ -13,6 +13,7 @@ namespace Business
     {
         public static void PostMessage(BgMessageEntity entity)
         {
+            entity.PRankId++;
             BgMessageData.Insert(entity);
         }
 
@@ -20,6 +21,11 @@ namespace Business
         public static List<BgMessageEntity> GetMessageListByPassageId(int passageId)
         {
             return BgMessageData.GetBgMessageEntityListByPassageId(passageId);
+        }
+
+        public static List<BgMessageRankEntity> GetRankByPassageId(int passageId)
+        {
+            return BgMessageData.GetRankByPassageId(passageId);
         }
     }
 }

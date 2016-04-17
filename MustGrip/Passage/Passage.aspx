@@ -7,32 +7,33 @@
         <div id="passage">
             <div class="ptitle"></div>
             <div class="pcontent">
-                <iframe class="txtContent"></iframe>
+                <iframe class="txtContent" id="xxx"></iframe>
                 <div>
                     <input type="hidden" id="txtRPassageId" />
                 </div>
             </div>
-            <div class="pcommentList">
-                <ul>
-                    
-                </ul>
+            <div>
+                <ol class="pcommentList">
+                </ol>
             </div>
+
             <div class="preply">
                 <h3>发表评论:(目前n条评论)</h3>
+                <small><a href="###">点击这里取消评论</a></small>
                 <p>
                     <input type="text" id="txtRAuthor" />
-                    <label for="txtRAuthor"><span style="color: red">*</span></label>
+                    <label for="txtRAuthor">名称(<span style="color: red">*</span>)</label>
                 </p>
                 <p>
                     <input type="text" id="txtREmail" />
-                    <label for="txtREmail">(<span style="color: red">*</span>)</label>
+                    <label for="txtREmail">邮箱(不会被公开)(<span style="color: red">*</span>)</label>
                 </p>
                 <p>
                     <input type="text" id="txtRWeb" />
-                    <label for="txtRWeb">你的网站(选填)</label>
+                    <label for="txtRWeb">网站(选填)</label>
                 </p>
                 <p>
-                    <textarea id="txtRContent" cols="100%" rows="10" > </textarea>
+                    <textarea id="txtRContent" cols="100%" rows="10"></textarea>
                     <label for="txtRContent">评论</label>
                 </p>
                 <p>
@@ -54,39 +55,35 @@
         <li class="depth1">
             <div>
                 <img src="#" alt="xxx" />
-                <span>${Author}</span><span>说道:</span>
+                <span><a href="http://${WebAddress}">${Name}</a></span><span> 说道:</span>
             </div>
+            <p class="comment_time">${CreateTime}</p>
+            <p class="comment_message">${Message}</p>
             <div>
-                <span>${CreateTime}</span>
+                <a href="###" class="RReplyTo">回复:</a>
+                <input type="hidden" class="RMessageId" value="${BgMessageId}" />
+                <input type="hidden" class="RPRank" value="${MaxRankId}" />
             </div>
-            <div>
-                <p>${Message}</p>
-            </div>
-            <div>
-                <span><a href="###">回复:</a></span>
-            </div>
-<%--            <ul>
-                {{tmpl($data.ReplyList) "#tmplMessageDepth2"}}
-            </ul>--%>
+            <ul>
+                {{tmpl($data.ChildList) "#tmplMessageDepth2"}}
+            </ul>
         </li>
     </script>
     <script type="text/x-jquery-tmpl" id="tmplMessageDepth2">
         <li class="depth2">
             <div>
                 <img src="#" alt="xxx" />
-                <span>${Author}</span><span>说道:</span>
+                <span><a href="http://${WebAddress}">${Name}</a></span><span> 说道:</span>
             </div>
+            <p class="comment_time">${CreateTime}</p>
+            <p class="comment_message">${Message}</p>
             <div>
-                <span>${CreateTime}</span>
-            </div>
-            <div>
-                <p>${Message}</p>
-            </div>
-            <div>
-                <span><a href="###">回复:</a></span>
+                <a href="###" class="RReplyTo">回复:</a>
+                <input type="hidden" class="RMessageId" value="${BgMessageId}" />
+                <input type="hidden" class="RPRank" value="${MaxRankId}" />
             </div>
             <ul>
-                {{tmpl($data.ReplyList) "#tmplMessageDepth3"}}
+                {{tmpl($data.ChildList) "#tmplMessageDepth3"}}
             </ul>
         </li>
     </script>
@@ -94,17 +91,28 @@
         <li class="depth3">
             <div>
                 <img src="#" alt="xxx" />
-                <span>${Author}</span><span>说道:</span>
+                <span><a href="http://${WebAddress}">${Name}</a></span><span> 说道:</span>
             </div>
+            <p class="comment_time">${CreateTime}</p>
+            <p class="comment_message">${Message}</p>
             <div>
-                <span>${CreateTime}</span>
+                <a href="###" class="RReplyTo">回复:</a>
+                <input type="hidden" class="RMessageId" value="${BgMessageId}" />
+                <input type="hidden" class="RPRank" value="${MaxRankId}" />
             </div>
+            <ul>
+                {{tmpl($data.ChildList) "#tmplMessageDepth4"}}
+            </ul>
+        </li>
+    </script>
+    <script type="text/x-jquery-tmpl" id="tmplMessageDepth4">
+        <li class="depth4">
             <div>
-                <p>${Message}</p>
+                <img src="#" alt="xxx" />
+                <span><a href="http://${WebAddress}">${Name}</a></span><span> 说道:</span>
             </div>
-            <div>
-                <span><a href="###">回复:</a></span>
-            </div>
+            <p class="comment_time">${CreateTime}</p>
+            <p class="comment_message">${Message}</p>
         </li>
     </script>
 

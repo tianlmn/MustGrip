@@ -95,17 +95,38 @@ var peInit = function () {
             }
 
         });
-        
+
     });
-    
+
     //初始化html编辑器
-    $("#txtContent").cleditor({height:350});
+    $("#txtContent").cleditor({ height: 350 });
 }
 
 var ppInit = function () {
     $(".menu li:eq(1)").addClass("on");
     var pid = Util.getParam("pid");
-    if (!!pid) {
+
+    var replyTo = function() {
+        var self = $(this);
+        var parent = self.parent();
+        var MessageId = parent.find('.RMessageId').val();
+        var rank = self.parent().find('.RPRank').val();
+        $(".preply").appendTo(parent);
+        $(".preply #txtRMasterMessageId").val(MessageId);
+        $(".preply #txtRPRank").val(rank);
+        $(".preply small").css("display", "block");
+    };
+
+    var cancelReply = function() {
+        $(".preply small").css("display", "none");
+        $("#passage").append($(".preply"));
+        $(".preply #txtRMasterMessageId").val("0");
+        $(".preply #txtRPRank").val("0");
+    };
+
+    $(".preply small a").on("click", cancelReply);
+
+    var getPassage = function(pid) {
         var data = {};
         data.PassageId = pid;
         $("#txtRPassageId").val(pid);
@@ -120,15 +141,46 @@ var ppInit = function () {
                     $(".ptitle").html(jsonData.result.passage.Title);
                     var htmlcontent = Util.htmlDecodeByRegExp(jsonData.result.content);
                     $('.pcontent').find('iframe').contents().find('body').html(htmlcontent);
-                    var contentheight = $('.pcontent').find('iframe').contents().find('html').height();
-                    $('.pcontent').find('iframe').height(contentheight);
+
+
+                    //加载所有图片完毕后，重新计算高度
+                    var onload = new Util.onLoadFunc($(".txtContent").contents().find("html img"), function () {
+                        var trueHeight = $(".txtContent").contents().find("html").height();
+                        $('.txtContent').height(trueHeight);
+                    });
+                    onload();
+
+                }
+            }
+        });
+    };
+
+    var getMessage= function(pid) {
+        var data = {};
+        data.PassageId = pid;
+        $("#txtRPassageId").val(pid);
+        $.ajax({
+            url: ajaxUrl,
+            data: { f: "GetMessage", data: JSON.stringify(data) },
+            type: "get",
+            dataType: "json",
+            success: function (jsonData) {
+                if (jsonData != null && jsonData.success == 1) {
+                    //加载回复内容前先把回复面板放回原位，不然就被清空了,并初始化参数
+                    cancelReply();
 
                     //加载回复内容
                     var d = jsonData.result.messageList;
-                    $("#tmplMessageDepth1").tmpl(d).appendTo(".pcommentList ul");
+                    $(".pcommentList").empty();
+                    $("#tmplMessageDepth1").tmpl(d).appendTo(".pcommentList");
+                    $(".RReplyTo").each(function () {
+                        var self = $(this);
+                        self.on("click", replyTo);
+                        //self.siblings(".RPRank").val();
+                    });
 
-                    //加载回复面板
-                    $("#btnRCommit").on("click", function () {
+                    //加载回复事件
+                    $("#btnRCommit").off("click").on("click", function () {
                         var data = {};
                         data.PassageId = $.trim($("#txtRPassageId").val());
                         data.Message = $.trim($("#txtRContent").val());
@@ -148,7 +200,7 @@ var ppInit = function () {
                             dataType: "json",
                             success: function (jsonData) {
                                 if (!!jsonData && jsonData.success == 1) {
-                                    alert(jsonData.msg);
+                                    getMessage(pid);
                                 }
                             }
                         });
@@ -158,8 +210,98 @@ var ppInit = function () {
         });
     }
 
-    
+    if (!!pid) {
+        getPassage(pid);
+        getMessage(pid);
 
+
+        //var data = {};
+        //data.PassageId = pid;
+        //$("#txtRPassageId").val(pid);
+        //$.ajax({
+        //    url: ajaxUrl,
+        //    data: { f: "GetPassage", data: JSON.stringify(data) },
+        //    type: "get",
+        //    dataType: "json",
+        //    global: true,
+        //    success: function (jsonData) {
+        //        if (jsonData != null && jsonData.success == 1) {
+        //            //加载内容
+        //            $(".ptitle").html(jsonData.result.passage.Title);
+        //            var htmlcontent = Util.htmlDecodeByRegExp(jsonData.result.content);
+        //            $('.pcontent').find('iframe').contents().find('body').html(htmlcontent);
+
+
+        //            //加载回复内容
+        //            var d = jsonData.result.messageList;
+        //            $("#tmplMessageDepth1").tmpl(d).appendTo(".pcommentList");
+        //            $(".RReplyTo").each(function () {
+        //                var self = $(this);
+        //                self.on("click", replyTo);
+        //                //self.siblings(".RPRank").val();
+        //            });
+
+        //            //加载回复事件
+        //            $("#btnRCommit").on("click", function () {
+        //                var data = {};
+        //                data.PassageId = $.trim($("#txtRPassageId").val());
+        //                data.Message = $.trim($("#txtRContent").val());
+        //                data.MasterMessageId = $.trim($("#txtRMasterMessageId").val());
+        //                data.PRankId = $.trim($("#txtRPRank").val());
+
+
+        //                var userdata = {};
+        //                userdata.Name = $.trim($("#txtRAuthor").val());
+        //                userdata.Email = $.trim($("#txtREmail").val());
+        //                userdata.WebAddress = $.trim($("#txtRWeb").val());
+
+        //                $.ajax({
+        //                    url: ajaxUrl,
+        //                    type: "post",
+        //                    data: { f: "PostMessage", data: JSON.stringify(data), userdata: JSON.stringify(userdata) },
+        //                    dataType: "json",
+        //                    success: function (jsonData) {
+        //                        if (!!jsonData && jsonData.success == 1) {
+
+        //                        }
+        //                    }
+        //                });
+        //            });
+
+        //            //加载所有图片完毕后，重新计算高度
+        //            var onload = new Util.onLoadFunc($(".txtContent").contents().find("html img"), function() {
+        //                var trueHeight = $(".txtContent").contents().find("html").height();
+        //                $('.txtContent').height(trueHeight);
+        //            });
+        //            onload();
+
+        //        }
+        //    }
+        //});
+    }
+
+
+    //var sendcount = 0;
+    //var completecount = 0;
+    ////分页时重新设置 iframe 高度 ； 修改后：iframe.name = iframe.id
+    //var reSetIframeHeight = function () {
+    //    //最后设置iframe高度
+    //    var contentheight = $('.pcontent').find('iframe').contents().find('html').height();
+    //    $('.pcontent').find('iframe').height(contentheight);
+    //}
+
+    //// 添加ajax全局事件处理
+    //$(document).ajaxStart(function (a, b, c) {
+    //}).ajaxSend(function (e, xhr, opts) {
+    //    sendcount++;
+    //}).ajaxError(function (e, xhr, opts) {
+    //}).ajaxSuccess(function (e, xhr, opts) {
+    //}).ajaxComplete(function (e, xhr, opts) {
+    //    completecount++;
+    //    reSetIframeHeight();
+
+    //}).ajaxStop(function () {
+    //});
 
 
 }
@@ -220,6 +362,40 @@ var Util = {
 
     initIframe: function (select) {
         //使用插件。。。html编辑器实在是搞不定，一个简单的替换<br />都比想象的要复杂得多
+    },
+
+    //加载完毕后执行回调的函数
+    onLoadFunc: function(jq,callback) {
+        var t_img; // 定时器
+        var isLoad = true; // 控制变量
+        var trycount = 10;
+
+        // 判断图片加载的函数
+        function isImgLoad() {
+            // 查找所有封面图，迭代处理
+            jq.each(function () {
+                // 找到为0就将isLoad设为false，并退出each
+                if (this.height === 0) {
+                    isLoad = false;
+                    return false;
+                }
+            });
+            // 为true，没有发现为0的，或者加载了一定次数后，加载完毕
+            if (isLoad || (trycount--)==0) {
+                clearTimeout(t_img); // 清除定时器
+                // 回调函数
+                callback();
+                // 为false，因为找到了没有加载完成的图，将调用定时器递归
+            } else {
+                isLoad = true;
+                t_img = setTimeout(function () {
+                    isImgLoad(callback); // 递归扫描
+                }, 500); // 我这里设置的是500毫秒就扫描一次，可以自己调整
+            }
+        }
+
+        return isImgLoad;
+
     }
 
 

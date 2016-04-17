@@ -16,13 +16,13 @@ namespace MustGrip.Handle
     /// </summary>
     public class MustGripHandle : IHttpHandler, IRequiresSessionState
     {
-        
+
 
         public void ProcessRequest(HttpContext context)
         {
             string blogFileTempPath = ConfigurationManager.AppSettings["BlogFileTempPath"];
             string serverRootPath = context.Server.MapPath("/");
-            
+
 
             string data = context.Request.Params["data"];
             string f = context.Request.Params["f"];
@@ -30,6 +30,8 @@ namespace MustGrip.Handle
             PassageEntity pEntity;
             List<PassageEntity> pList;
             List<BgMessageEntity> mList;
+            List<BgUserEntity> uList;
+            List<BgMessageRankEntity> rList;
             string response = string.Empty;
             switch (f)
             {
@@ -39,7 +41,7 @@ namespace MustGrip.Handle
                     break;
                 case "GetPassageList":
                     pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data), serverRootPath);
-                    response = json.Serialize(new { success = 1, result = new{PassageList=pList} });
+                    response = json.Serialize(new { success = 1, result = new { PassageList = pList } });
                     break;
                 case "GetPassage":
                     pEntity = json.Deserialize<PassageEntity>(data);
@@ -47,13 +49,49 @@ namespace MustGrip.Handle
                     if (pList != null && pList.Count > 0)
                     {
                         var htmlcontent = BlogBusiness.ReadFile(pList[0].Path);
-                        mList = BgMessageBusiness.GetMessageListByPassageId(pEntity.PassageId);
-                        response = json.Serialize(new { success = 1, result = new { content = htmlcontent, passage = pList[0], messageList = mList } });
+                        response = json.Serialize(new
+                        {
+                            success = 1,
+                            result = new
+                            {
+                                content = htmlcontent,
+                                passage = pList[0]
+                            }
+                        });
                     }
                     else
                     {
                         response = json.Serialize(new { success = 0, msg = "文章内容被删除" });
                     }
+                    break;
+                case "GetMessage":
+                    pEntity = json.Deserialize<PassageEntity>(data);
+                    mList = BgMessageBusiness.GetMessageListByPassageId(pEntity.PassageId);
+                        uList = BgUserBusiness.GetBgUserEntityList(new BgUserEntity());
+                        rList = BgMessageBusiness.GetRankByPassageId(pEntity.PassageId);
+                        response = json.Serialize(new
+                        {
+                            success = 1,
+                            result = new
+                            {
+                                messageList = Utility.ConvertToTrees((
+                                    from m in mList
+                                    join u in uList on m.Author equals u.BgUserId
+                                    join r in rList on m.BgMessageId equals r.BgMessageId
+                                    select new BgMessageTreeEntity()
+                                    {
+                                        Name = u.Name,
+                                        CreateTime = m.DataChange_CreateTime.ToString("yyyy年MM月dd日 HH:mm:ss"),
+                                        Message = m.Message,
+                                        WebAddress = u.WebAddress,
+                                        MasterMessageId = m.MasterMessageId,
+                                        PRankId = m.PRankId,
+                                        BgMessageId = m.BgMessageId,
+                                        MaxRankId = r.MaxRankId,
+                                        ChildList= new List<BgMessageTreeEntity>()
+                                    }).ToList(), "MasterMessageId", "BgMessageId", "ChildList")
+                            }
+                        });
                     break;
                 case "PostMessage":
                     var sUserData = context.Request.Params["userdata"];
@@ -73,7 +111,7 @@ namespace MustGrip.Handle
 
 
             }
-            
+
             context.Response.ContentType = "application/json";
             context.Response.Write(response);
         }

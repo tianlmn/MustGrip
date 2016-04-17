@@ -20,7 +20,17 @@ namespace Data
         {
             var dbhelper = new MDBHelper(DBConnectionString.DB1);
             SqlParameter[] paramList = new SqlParameter[]
-            {	            	            new SqlParameter("@PassageId", classEntity.PassageId),	            new SqlParameter("@MasterMessageId", classEntity.MasterMessageId),	            new SqlParameter("@PRankId", classEntity.PRankId),	            new SqlParameter("@Author", classEntity.Author),	            new SqlParameter("@Message", classEntity.Message),	            new SqlParameter("@DataChange_LastTime", DateTime.Now),	            new SqlParameter("@DataChange_CreateTime", DateTime.Now),		        };
+            {
+	            
+	            new SqlParameter("@PassageId", classEntity.PassageId),
+	            new SqlParameter("@MasterMessageId", classEntity.MasterMessageId),
+	            new SqlParameter("@PRankId", classEntity.PRankId),
+	            new SqlParameter("@Author", classEntity.Author),
+	            new SqlParameter("@Message", classEntity.Message),
+	            new SqlParameter("@DataChange_LastTime", DateTime.Now),
+	            new SqlParameter("@DataChange_CreateTime", DateTime.Now),
+	
+	        };
             var paramOut = new SqlParameter("@BgMessageId", 0);
             paramOut.Direction = ParameterDirection.Output;
 
@@ -62,12 +72,36 @@ namespace Data
                     entity.DataChange_LastTime = CommonFunc.ConvertDateTime(dr["DataChange_LastTime"]);
                     entity.DataChange_CreateTime = CommonFunc.ConvertDateTime(dr["DataChange_CreateTime"]);
                     entity.Author = CommonFunc.ConvertObjectToInt32(dr["Author"]);
-                    entity.CreateTime = CommonFunc.ConvertObjectToString(entity.DataChange_CreateTime);
-
                     result.Add(entity);
                 }
             }
 
+            return result;
+        }
+
+        public static List<BgMessageRankEntity> GetRankByPassageId(int passageId)
+        {
+            List<BgMessageRankEntity> result = new List<BgMessageRankEntity>();
+            StringBuilder sql = new StringBuilder();
+            sql.Append(@" SELECT bm1.BgMessageId,ISNULL(MAX(bm2.PRankId),0) AS maxRankId 
+  FROM dbo.BgMessage bm1(NOLOCK)
+  LEFT JOIN dbo.BgMessage bm2(NOLOCK) ON bm1.BgMessageId=bm2.MasterMessageId
+  WHERE bm1.PassageId=@PassageId
+  GROUP BY bm1.BgMessageId ");
+            List<SqlParameter> paramList = new List<SqlParameter>();
+            paramList.Add(new SqlParameter("PassageId", passageId));
+            var dbhelper = new MDBHelper(DBConnectionString.DB1);
+            DataTable dt = dbhelper.ExecuteSql(sql.ToString(), paramList);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    BgMessageRankEntity entity = new BgMessageRankEntity();
+                    entity.BgMessageId = CommonFunc.ConvertObjectToInt32(dr["BgMessageId"]);
+                    entity.MaxRankId = CommonFunc.ConvertObjectToInt32(dr["maxRankId"]);
+                    result.Add(entity);
+                }
+            }
             return result;
         }
 

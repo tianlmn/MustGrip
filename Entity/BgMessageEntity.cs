@@ -51,9 +51,35 @@ namespace Entity
         /// </summary>
         public DateTime DataChange_CreateTime { get; set; }
 
-        public string ChangeTime { get; set; }
+    }
+
+    public class BgMessageRankEntity
+    {
+        public int BgMessageId { get; set; }
+
+        public int MaxRankId { get; set; }
+    }
+
+    public class BgMessageTreeEntity
+    {
+        public string Name { get; set; }
 
         public string CreateTime { get; set; }
+
+        public string Message { get; set; }
+
+        public string WebAddress { get; set; }
+
+        public int MasterMessageId { get; set; }
+
+        public int PRankId { get; set; }
+
+        public int BgMessageId { get; set; }
+
+        public int MaxRankId { get; set; }
+
+        public List<BgMessageTreeEntity> ChildList { get; set; }
+
     }
 
 }
