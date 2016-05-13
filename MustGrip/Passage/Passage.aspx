@@ -12,13 +12,8 @@
                     <input type="hidden" id="txtRPassageId" />
                 </div>
             </div>
-            <div>
-                <ol class="pcommentList">
-                </ol>
-            </div>
-
             <div class="preply">
-                <h3>发表评论:(目前n条评论)</h3>
+                <h3>发表评论:(目前<span></span>条评论)</h3>
                 <small><a href="###">点击这里取消评论</a></small>
                 <p>
                     <input type="text" id="txtRAuthor" />
@@ -42,6 +37,12 @@
                     <input type="hidden" id="txtRPRank" value="0" />
                 </p>
             </div>
+            <div>
+                <ol class="pcommentList">
+                </ol>
+            </div>
+
+            
         </div>
 
     </div>

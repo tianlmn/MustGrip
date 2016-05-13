@@ -119,7 +119,7 @@ var ppInit = function () {
 
     var cancelReply = function() {
         $(".preply small").css("display", "none");
-        $("#passage").append($(".preply"));
+        $(".pcontent").after($(".preply"));
         $(".preply #txtRMasterMessageId").val("0");
         $(".preply #txtRPRank").val("0");
     };
@@ -168,6 +168,7 @@ var ppInit = function () {
                 if (jsonData != null && jsonData.success == 1) {
                     //加载回复内容前先把回复面板放回原位，不然就被清空了,并初始化参数
                     cancelReply();
+                    $(".preply h3 span").html(jsonData.result.messageList.length);
 
                     //加载回复内容
                     var d = jsonData.result.messageList;

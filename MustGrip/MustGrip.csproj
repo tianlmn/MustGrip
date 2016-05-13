@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -63,6 +64,7 @@
     <Content Include="MustGrip.Master" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="Handle\MustGripHandle.ashx" />
+    <Content Include="Handle\UploadHandle.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -81,12 +83,15 @@
     <Content Include="Passage\PassageEdit.aspx" />
     <Content Include="Passage\PassageList.aspx" />
     <Content Include="Passage\tmp.html" />
-    <Content Include="Passage\wenzhang.html" />
+    <Content Include="Picture\wenzhang.html" />
     <Content Include="Plugin\CLEditor1_4_5\images\buttons.gif" />
     <Content Include="Plugin\CLEditor1_4_5\images\toolbar.gif" />
     <Content Include="Plugin\CLEditor1_4_5\jquery.cleditor.css" />
     <Content Include="Plugin\CLEditor1_4_5\jquery.cleditor.js" />
     <Content Include="Plugin\CLEditor1_4_5\jquery.cleditor.min.js" />
+    <Content Include="Plugin\jQuery-File-Upload\jquery.fileupload.js" />
+    <Content Include="Plugin\jQuery-File-Upload\jquery.iframe-transport.js" />
+    <Content Include="Plugin\jQuery-File-Upload\vendor\jquery.ui.widget.js" />
     <Content Include="resource\img\dot_16.ico" />
     <Content Include="resource\img\fengche.jpg" />
     <Content Include="resource\img\nav_1.jpg" />
@@ -102,6 +107,9 @@
   <ItemGroup>
     <Compile Include="Handle\MustGripHandle.ashx.cs">
       <DependentUpon>MustGripHandle.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handle\UploadHandle.ashx.cs">
+      <DependentUpon>UploadHandle.ashx</DependentUpon>
     </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
