@@ -1,0 +1,16 @@
+D:\mygit\MustGrip\Business\bin\Debug\Business.dll
+D:\mygit\MustGrip\Business\bin\Debug\Business.pdb
+D:\mygit\MustGrip\Business\bin\Debug\Data.dll
+D:\mygit\MustGrip\Business\bin\Debug\Entity.dll
+D:\mygit\MustGrip\Business\bin\Debug\Common.dll
+D:\mygit\MustGrip\Business\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\mygit\MustGrip\Business\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\mygit\MustGrip\Business\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\mygit\MustGrip\Business\bin\Debug\Microsoft.Practices.Unity.dll
+D:\mygit\MustGrip\Business\bin\Debug\Microsoft.Practices.Unity.Interception.dll
+D:\mygit\MustGrip\Business\bin\Debug\Data.pdb
+D:\mygit\MustGrip\Business\bin\Debug\Entity.pdb
+D:\mygit\MustGrip\Business\bin\Debug\Common.pdb
+D:\mygit\MustGrip\Business\obj\Debug\Business.csprojResolveAssemblyReference.cache
+D:\mygit\MustGrip\Business\obj\Debug\Business.dll
+D:\mygit\MustGrip\Business\obj\Debug\Business.pdb

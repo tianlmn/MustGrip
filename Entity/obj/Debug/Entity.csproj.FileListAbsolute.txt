@@ -1,0 +1,4 @@
+D:\mygit\MustGrip\Entity\bin\Debug\Entity.dll
+D:\mygit\MustGrip\Entity\bin\Debug\Entity.pdb
+D:\mygit\MustGrip\Entity\obj\Debug\Entity.dll
+D:\mygit\MustGrip\Entity\obj\Debug\Entity.pdb

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        html, body, div, ul {margin: 0px;padding: 0px;}
+        .clear {clear: both;}
+        .content, .footer {margin: 0 auto;width: 90%;}
+        .content {border: solid 2px yellow;}
+        .footer {border: solid 2px red;}
+        .content ul li {float: left;width: 100px;height: 70px;margin: 5px 5px;border: solid 2px red;list-style-type: none;background-color: #ccc;}
+    </style>
+    <script src="js/jquery-1.12.2.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var m_nodeObj, t_nodeObj, tempWidth;
+            $("#btnSet").click(function () {
+                m_nodeObj = $(".content li:eq(" + $("#itemNumb").val() + ")");
+                t_nodeObj = $(".content li:eq(" + $("#setNumb").val() + ")");
+
+                ////方案一 无动画
+                //m_nodeObj.insertAfter(t_nodeObj);
+
+                ////方案二
+                //$(m_nodeObj).animate({ "width": "toggle" }, function () {
+                //    $(this).insertAfter($(t_nodeObj)).animate({ "width": "toggle" })
+                //})
+
+                //方案三
+                $(m_nodeObj).clone(true).appendTo(".content ul")
+                .css({ "position": "absolute", "top": node.ordinate(m_nodeObj), "left": node.abscissa(m_nodeObj) })
+                .animate({ width: node.width(m_nodeObj) + 10, height: node.height(m_nodeObj) + 10, top: node.ordinate(m_nodeObj) - 5, left: node.abscissa(m_nodeObj) - 5 }, 200, function () {
+                    tempWidth = node.width(m_nodeObj);
+                    t_nodeObj.animate({ "margin-right": tempWidth });
+                    m_nodeObj.animate({ "width": '0px' }, function () { $(this).remove() });
+                })
+                .animate({ width: node.width(m_nodeObj), height: node.height(m_nodeObj), top: node.ordinate(t_nodeObj), left: node.abscissa(t_nodeObj) }, 500, function () {
+                        //  m_nodeObj.insertAfter(t_nodeObj).animate({ "width": tempWidth }); $(this).remove();
+                        t_nodeObj.css({ "margin-right": "0px" });
+                        m_nodeObj.css("width", tempWidth).insertAfter(t_nodeObj);
+                        $(this).remove();
+
+                    })
+            })
+        })
+        node = {
+            abscissa: function (obj) {
+                return obj.offset().left - parseInt(obj.css("margin-left").replace("px", ""));
+            },
+            ordinate: function (obj) {
+                return obj.offset().top - parseInt(obj.css("margin-top").replace("px", ""));
+            },
+            height: function (obj) {
+                return parseInt(obj.css("height").replace("px", ""));
+            },
+            width: function (obj) {
+                return parseInt(obj.css("width").replace("px", ""));
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="content">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div class="footer">
+        <br />
+        element:  <input type="text" id="itemNumb" />
+        <br />
+        <br />
+        destination: <input type="text" id="setNumb" />
+        <br />
+        <br />
+        <input type="button" value="set" id="btnSet" />
+    </div>
+</body>
+</html>

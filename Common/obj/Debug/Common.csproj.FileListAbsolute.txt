@@ -1,0 +1,9 @@
+D:\mygit\MustGrip\Common\bin\Debug\Common.dll
+D:\mygit\MustGrip\Common\bin\Debug\Common.pdb
+D:\mygit\MustGrip\Common\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\mygit\MustGrip\Common\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\mygit\MustGrip\Common\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\mygit\MustGrip\Common\bin\Debug\Microsoft.Practices.Unity.dll
+D:\mygit\MustGrip\Common\bin\Debug\Microsoft.Practices.Unity.Interception.dll
+D:\mygit\MustGrip\Common\obj\Debug\Common.dll
+D:\mygit\MustGrip\Common\obj\Debug\Common.pdb
