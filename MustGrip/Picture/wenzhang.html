@@ -19,7 +19,7 @@
     </div>
     <div id="main" class="clear">
         <input id="fileupload" type="file" name="files[]" data-url="/Handle/UploadHandle.ashx/" multiple>
-
+        <div class="c_pictures_1"></div>
     </div>
     <div id="footer" class="clear">
         <p>
@@ -28,21 +28,13 @@
         </p>
     </div>
     <script src="../js/jquery-1.12.2.js"></script>
-    <script src="../js/app.js"></script>
     <script src="/Plugin/jQuery-File-Upload/vendor/jquery.ui.widget.js"></script>
     <script src="/Plugin/jQuery-File-Upload/jquery.iframe-transport.js"></script>
     <script src="/Plugin/jQuery-File-Upload/jquery.fileupload.js"></script>
+    <script src="../js/app.js"></script>
     <script>
-        $(function () {
-            $("#fileupload").fileupload({
-                dataType: "json",
-                done: function (e, data) {
-                    $.each(data.result.files, function (index, file) {
-                        $("<p/>").text(file.name).appendTo(document.body);
-                    });
-                }
-            });
-        });
+        var pic = new PictureList();
+        pic.init();
     </script>
 
 </body>

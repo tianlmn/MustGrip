@@ -59,13 +59,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\pagination.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Handle\MustGripPictureHandle.ashx" />
     <Content Include="js\jquery.pagination.js" />
     <Content Include="js\jquery.tmpl.min.js" />
     <Content Include="MustGrip.Master" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="Handle\MustGripHandle.ashx" />
     <Content Include="Handle\UploadHandle.ashx" />
-    <Content Include="Handle\HostelHotelConfigHande.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -108,11 +109,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Handle\HostelHotelConfigHande.ashx.cs">
-      <DependentUpon>HostelHotelConfigHande.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Handle\MustGripHandle.ashx.cs">
       <DependentUpon>MustGripHandle.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handle\MustGripPictureHandle.ashx.cs">
+      <DependentUpon>MustGripPictureHandle.ashx</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Handle\UploadHandle.ashx.cs">
       <DependentUpon>UploadHandle.ashx</DependentUpon>

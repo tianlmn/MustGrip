@@ -11,27 +11,52 @@ namespace Business
 {
     public class BlogBusiness
     {
-        public static int SavePassage(PassageEntity entity,string serverRootPath,string fileTempPath)
+        public static int SavePassage(PassageEntity entity, out string msg)
         {
-            var pl = BlogData.GetPassageEntityList(entity);
-            string filename = Guid.NewGuid().ToString();
-            entity.Path = fileTempPath + "\\" + filename + ".html";
-            entity.DataChange_CreateTime = DateTime.Now;
-            entity.DataChange_LastTime = DateTime.Now;
-            WriteFile(entity.Content, serverRootPath+entity.Path);
-            if (entity.PassageId>0)
+            msg = string.Empty;
+            try
             {
-                BlogData.UpdateEntity(entity);
+                if (CheckInput(entity, ref msg))
+                {
+                    entity.DataChange_CreateTime = DateTime.Now;
+                    entity.DataChange_LastTime = DateTime.Now;
+                    WriteFile(entity.Content, entity.Path);
+                    if (entity.PassageId > 0)
+                    {
+                        BlogData.UpdateEntity(entity);
+                        msg = "更新成功";
+                    }
+                    else if (entity.PassageId == 0)
+                    {
+                        BlogData.InsertEntity(entity);
+                        msg = "插入成功";
+                    }
+                }
+                else
+                {
+                    return -1;
+                }
             }
-            else if(entity.PassageId==0)
+            catch (Exception ex)
             {
-                BlogData.InsertEntity(entity);
+                return -1;
+                throw;
             }
+            
             return 0;
         }
 
 
 
+        private static bool CheckInput(PassageEntity entity, ref string msg)
+        {
+            if (string.IsNullOrEmpty(entity.Title))
+            {
+                msg = "标题不能为空";
+                return false;
+            }
+            return true;
+        }
 
 
         /// <summary>

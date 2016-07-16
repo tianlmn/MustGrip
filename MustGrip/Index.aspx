@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MustGrip.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Mustgrip.Index" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="main" class="clear">

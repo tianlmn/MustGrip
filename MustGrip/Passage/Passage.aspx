@@ -12,6 +12,7 @@
                     <input type="hidden" id="txtRPassageId" />
                 </div>
             </div>
+            <div class="passage-edit"><a href="###" type="button">编辑</a></div>
             <div class="preply">
                 <h3>发表评论:(目前<span></span>条评论)</h3>
                 <small><a href="###">点击这里取消评论</a></small>
@@ -108,6 +109,42 @@
     </script>
     <script type="text/x-jquery-tmpl" id="tmplMessageDepth4">
         <li class="depth4">
+            <div>
+                <img src="#" alt="xxx" />
+                <span><a href="http://${WebAddress}">${Name}</a></span><span> 说道:</span>
+            </div>
+            <p class="comment_time">${CreateTime}</p>
+            <p class="comment_message">${Message}</p>
+            <div>
+                <a href="###" class="RReplyTo">回复:</a>
+                <input type="hidden" class="RMessageId" value="${BgMessageId}" />
+                <input type="hidden" class="RPRank" value="${MaxRankId}" />
+            </div>
+            <ul>
+                {{tmpl($data.ChildList) "#tmplMessageDepth5"}}
+            </ul>
+        </li>
+    </script>
+    <script type="text/x-jquery-tmpl" id="tmplMessageDepth5">
+        <li class="depth5">
+            <div>
+                <img src="#" alt="xxx" />
+                <span><a href="http://${WebAddress}">${Name}</a></span><span> 说道:</span>
+            </div>
+            <p class="comment_time">${CreateTime}</p>
+            <p class="comment_message">${Message}</p>
+            <div>
+                <a href="###" class="RReplyTo">回复:</a>
+                <input type="hidden" class="RMessageId" value="${BgMessageId}" />
+                <input type="hidden" class="RPRank" value="${MaxRankId}" />
+            </div>
+            <ul>
+                {{tmpl($data.ChildList) "#tmplMessageDepth6"}}
+            </ul>
+        </li>
+    </script>
+    <script type="text/x-jquery-tmpl" id="tmplMessageDepth6">
+        <li class="depth6">
             <div>
                 <img src="#" alt="xxx" />
                 <span><a href="http://${WebAddress}">${Name}</a></span><span> 说道:</span>

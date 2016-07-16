@@ -22,7 +22,7 @@ namespace MustGrip.Handle
         {
             string blogFileTempPath = ConfigurationManager.AppSettings["BlogFileTempPath"];
             string serverRootPath = context.Server.MapPath("/");
-
+             
 
             string data = context.Request.Params["data"];
             string f = context.Request.Params["f"];
@@ -33,11 +33,19 @@ namespace MustGrip.Handle
             List<BgUserEntity> uList;
             List<BgMessageRankEntity> rList;
             string response = string.Empty;
+            string msg = string.Empty;
             switch (f)
             {
                 case "SavePassage":
-                    BlogBusiness.SavePassage(json.Deserialize<PassageEntity>(data), serverRootPath, blogFileTempPath);
-                    response = json.Serialize(new { success = 1, msg = "保存文章成功" });
+
+                    SavePassage(json.Deserialize<PassageEntity>(data),serverRootPath, blogFileTempPath, out msg);
+                    response = json.Serialize(
+                        new
+                        {
+                            success = 1,
+                            msg
+                        }
+                        );
                     break;
                 case "GetPassageList":
                     pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data), serverRootPath);
@@ -114,6 +122,13 @@ namespace MustGrip.Handle
 
             context.Response.ContentType = "application/json";
             context.Response.Write(response);
+        }
+
+        private int SavePassage(PassageEntity entity, string serverRootPath, string blogFileTempPath, out string msg)
+        {
+            string filename = Guid.NewGuid().ToString();
+            entity.Path = serverRootPath + blogFileTempPath + "\\" + filename + ".html";
+            return BlogBusiness.SavePassage(entity, out msg);
         }
 
         public bool IsReusable

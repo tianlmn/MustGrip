@@ -11,10 +11,10 @@ namespace MustGrip.Passage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!(Request.Params["wife"] != null && Request.Params["wife"]=="orchid"))
-            {
-                Response.Redirect("PassageList.aspx");
-            }
+            //if (!(Request.Params["wife"] != null && Request.Params["wife"]=="orchid"))
+            //{
+            //    Response.Redirect("PassageList.aspx");
+            //}
         }
     }
 }

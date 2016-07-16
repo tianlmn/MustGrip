@@ -30,6 +30,7 @@ namespace Entity
         public string ChangeTime { get; set; }
 
         public string Summary { get; set; }
+
     }
 
 }

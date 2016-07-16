@@ -7,3 +7,13 @@ D:\mygit\MustGrip\Common\bin\Debug\Microsoft.Practices.Unity.dll
 D:\mygit\MustGrip\Common\bin\Debug\Microsoft.Practices.Unity.Interception.dll
 D:\mygit\MustGrip\Common\obj\Debug\Common.dll
 D:\mygit\MustGrip\Common\obj\Debug\Common.pdb
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\bin\Debug\Common.dll
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\bin\Debug\Common.pdb
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\bin\Debug\Microsoft.Practices.Unity.dll
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\bin\Debug\Microsoft.Practices.Unity.Interception.dll
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\obj\Debug\Common.dll
+D:\用户目录\我的文档\Visual Studio 2013\Projects\mustgrip\Common\obj\Debug\Common.pdb

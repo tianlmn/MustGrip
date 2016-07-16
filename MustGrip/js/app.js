@@ -75,33 +75,47 @@ var plInit = function () {
 
 //文章编辑页js
 var peInit = function () {
+    //初始化html编辑器
+    var $clEditor = $("#txtContent").cleditor({ height: 350 });
+
+    //初始化内容
+    var pid = Util.getParam("pid");
+    
+    if (pid > 0) {
+        $clEditor.getPassage(pid);
+    } else {
+        pid = 0;
+    }
+    $("#passagdid").val(pid);
+
     $(".menu li:eq(1)").addClass("on");
     $("#btnSavePassage").on("click", function () {
         var data = {};
         data.Title = $("#txtptitle").val();
         data.Author = "肖斐";
         data.Type = 1;
-        var html = $('.pcontent').find('iframe').contents().find('body').html();
+        var html = $clEditor[0].$frame.contents().find('body').html();
         data.content = Util.htmlEncodeByRegExp(html);
-        data.PassageId = 0;
+        data.PassageId = $("#passagdid").val();
         data.Summary = $(".txtSummary").val();
         $.ajax({
             url: ajaxUrl,
             data: { data: JSON.stringify(data), f: "SavePassage" },
             dataType: "json",
             type: "POST",
-            success: function () {
-                alert("success");
+            success: function (data) {
+                alert(data.msg);
             }
 
         });
 
     });
 
-    //初始化html编辑器
-    $("#txtContent").cleditor({ height: 350 });
+    
+    
 }
 
+//文章查看页js
 var ppInit = function () {
     $(".menu li:eq(1)").addClass("on");
     var pid = Util.getParam("pid");
@@ -126,34 +140,6 @@ var ppInit = function () {
 
     $(".preply small a").on("click", cancelReply);
 
-    var getPassage = function(pid) {
-        var data = {};
-        data.PassageId = pid;
-        $("#txtRPassageId").val(pid);
-        $.ajax({
-            url: ajaxUrl,
-            data: { f: "GetPassage", data: JSON.stringify(data) },
-            type: "get",
-            dataType: "json",
-            success: function (jsonData) {
-                if (jsonData != null && jsonData.success == 1) {
-                    //加载内容
-                    $(".ptitle").html(jsonData.result.passage.Title);
-                    var htmlcontent = Util.htmlDecodeByRegExp(jsonData.result.content);
-                    $('.pcontent').find('iframe').contents().find('body').html(htmlcontent);
-
-
-                    //加载所有图片完毕后，重新计算高度
-                    var onload = new Util.onLoadFunc($(".txtContent").contents().find("html img"), function () {
-                        var trueHeight = $(".txtContent").contents().find("html").height();
-                        $('.txtContent').height(trueHeight);
-                    });
-                    onload();
-
-                }
-            }
-        });
-    };
 
     var getMessage= function(pid) {
         var data = {};
@@ -202,6 +188,7 @@ var ppInit = function () {
                             success: function (jsonData) {
                                 if (!!jsonData && jsonData.success == 1) {
                                     getMessage(pid);
+                                    alert("回复成功");
                                 }
                             }
                         });
@@ -212,108 +199,68 @@ var ppInit = function () {
     }
 
     if (!!pid) {
-        getPassage(pid);
+        $(".txtContent").getPassage(pid);
         getMessage(pid);
 
+        $(".passage-edit a").on("click", function() {
+            location.href = "PassageEdit.aspx?pid=" + pid;
+        });
 
-        //var data = {};
-        //data.PassageId = pid;
-        //$("#txtRPassageId").val(pid);
-        //$.ajax({
-        //    url: ajaxUrl,
-        //    data: { f: "GetPassage", data: JSON.stringify(data) },
-        //    type: "get",
-        //    dataType: "json",
-        //    global: true,
-        //    success: function (jsonData) {
-        //        if (jsonData != null && jsonData.success == 1) {
-        //            //加载内容
-        //            $(".ptitle").html(jsonData.result.passage.Title);
-        //            var htmlcontent = Util.htmlDecodeByRegExp(jsonData.result.content);
-        //            $('.pcontent').find('iframe').contents().find('body').html(htmlcontent);
-
-
-        //            //加载回复内容
-        //            var d = jsonData.result.messageList;
-        //            $("#tmplMessageDepth1").tmpl(d).appendTo(".pcommentList");
-        //            $(".RReplyTo").each(function () {
-        //                var self = $(this);
-        //                self.on("click", replyTo);
-        //                //self.siblings(".RPRank").val();
-        //            });
-
-        //            //加载回复事件
-        //            $("#btnRCommit").on("click", function () {
-        //                var data = {};
-        //                data.PassageId = $.trim($("#txtRPassageId").val());
-        //                data.Message = $.trim($("#txtRContent").val());
-        //                data.MasterMessageId = $.trim($("#txtRMasterMessageId").val());
-        //                data.PRankId = $.trim($("#txtRPRank").val());
-
-
-        //                var userdata = {};
-        //                userdata.Name = $.trim($("#txtRAuthor").val());
-        //                userdata.Email = $.trim($("#txtREmail").val());
-        //                userdata.WebAddress = $.trim($("#txtRWeb").val());
-
-        //                $.ajax({
-        //                    url: ajaxUrl,
-        //                    type: "post",
-        //                    data: { f: "PostMessage", data: JSON.stringify(data), userdata: JSON.stringify(userdata) },
-        //                    dataType: "json",
-        //                    success: function (jsonData) {
-        //                        if (!!jsonData && jsonData.success == 1) {
-
-        //                        }
-        //                    }
-        //                });
-        //            });
-
-        //            //加载所有图片完毕后，重新计算高度
-        //            var onload = new Util.onLoadFunc($(".txtContent").contents().find("html img"), function() {
-        //                var trueHeight = $(".txtContent").contents().find("html").height();
-        //                $('.txtContent').height(trueHeight);
-        //            });
-        //            onload();
-
-        //        }
-        //    }
-        //});
     }
-
-
-    //var sendcount = 0;
-    //var completecount = 0;
-    ////分页时重新设置 iframe 高度 ； 修改后：iframe.name = iframe.id
-    //var reSetIframeHeight = function () {
-    //    //最后设置iframe高度
-    //    var contentheight = $('.pcontent').find('iframe').contents().find('html').height();
-    //    $('.pcontent').find('iframe').height(contentheight);
-    //}
-
-    //// 添加ajax全局事件处理
-    //$(document).ajaxStart(function (a, b, c) {
-    //}).ajaxSend(function (e, xhr, opts) {
-    //    sendcount++;
-    //}).ajaxError(function (e, xhr, opts) {
-    //}).ajaxSuccess(function (e, xhr, opts) {
-    //}).ajaxComplete(function (e, xhr, opts) {
-    //    completecount++;
-    //    reSetIframeHeight();
-
-    //}).ajaxStop(function () {
-    //});
-
-
 }
 
 
+$.fn.getPassage = function (pid) {
+    var $self = $(this);
+    var data = {};
+    data.PassageId = pid;
+    $("#txtRPassageId").val(pid);
+
+    $.ajax({
+        url: ajaxUrl,
+        data: { f: "GetPassage", data: JSON.stringify(data) },
+        type: "get",
+        dataType: "json",
+        success: function (jsonData) {
+            if (jsonData != null && jsonData.success == 1) {
+                
+                var htmlcontent = Util.htmlDecodeByRegExp(jsonData.result.content);
+
+                if ($self.is("iframe")) {
+                    //加载标题，浏览页面
+                    $(".ptitle").html(jsonData.result.passage.Title);
+
+                    $self.contents().find('body').html(htmlcontent);
+                    //加载所有图片完毕后，重新计算高度
+                    var onload = new Util.onLoadFunc($self.contents().find("html img"), function () {
+                        var trueHeight = $self.contents().find("html").height();
+                        $self.height(trueHeight+30);
+                    });
+                    onload();
+                } else if ($self[0].$area) {
+                    //加载标题，编辑页面
+                    $("#txtptitle").val(jsonData.result.passage.Title);
+
+                    //加载摘要
+                    $(".txtSummary").val(jsonData.result.passage.Summary);
+
+                    //这段只能这么写了，其实下回应该用ckeditor，这个讲究用一下，直接操作它的wraped对象了
+                    $self[0].$area.val(htmlcontent);
+                    $self[0].updateFrame();
+                }
+                
+
+            }
+        }
+    });
+    return $self;
+};
 
 
 
 //图片相关js
-var Picture = {
-    var init = function () {
+var PictureList = function () {
+    this.init = function () {
         $(".c_pictures_1").getImageListByType();
         initImgdrag();
         initDeleteImg();
@@ -321,8 +268,8 @@ var Picture = {
         initSave();
     };
 
-    var HANDLE = "Handler/HostelHotelConfigHande.ashx";
-    var PICTUREHANDLE = "Handler/UploadHandle.ashx";
+    var HANDLE = "Handle/MustGripPictureHandle.ashx";
+    var PICTUREHANDLE = "Handle/UploadHandle.ashx";
     var initImgdrag = function () {
     // 正在拖动的图片的父级DIV 
     var $srcImgDiv = null;
@@ -358,7 +305,7 @@ $.fn.initAddImg = function (type) {
     var self = $(this);
 
     //判断是否需要初始化控件
-    if (needInitAddImage(type) && self.find(".c_picture_1_a").length==0) {
+    if (self.find(".c_picture_1_a").length==0) {
         self.append('<li>\
             <input type="file" class="c_picture_1_a" name="files[]" multiple style="opacity: 0;z-index: 1;position: absolute;" />\
             <img class="c_picture_1_a" src="resource/img/add.ico" alt="add" style="position: relative;z-index: 2;" />\
@@ -547,11 +494,6 @@ var getPageInfo = function () {
     return pageInfo;
 };
 
-var needInitAddImage = function (type) {
-    return ((type == "1" || type == "2" || type == "3" || type == "4") && ($(".c_pictures_1").children("li").length < 10)) ||
-    (type == "5" && ($(".c_pictures_1").children("li").length < 100));
-};
-
 $.fn.getImageListByType = function () {
     var self = $(this);
     self.empty();
@@ -594,23 +536,22 @@ var initDate = function () {
 
 $.fn.addImg = function (type, obj) {
     var self = this;
-    if (needInitAddImage(type)) {
-        var li = $("<li></li>");
-        var img = $('<img src="' + obj.ImageUrl + '" alt="img" />');
-        var imgdel = $('<img src="resource/img/delete.ico" class="c_picture_1_d" alt="delete" />\
+    var li = $("<li></li>");
+    var img = $('<img src="' + obj.ImageUrl + '" alt="img" />');
+    var imgdel = $('<img src="resource/img/delete.ico" class="c_picture_1_d" alt="delete" />\
             <input type="hidden" class="c_picture_id"  style="display: none;" value="' + obj.HostelHotelConfigId + '" />');
-        var divclear = $('<div class="clear"></div>');
+    var divclear = $('<div class="clear"></div>');
 
-        var divl = $('<div class="img-div"></div>');
-        var divr = $('<div class="drop-right"></div>');
+    var divl = $('<div class="img-div"></div>');
+    var divr = $('<div class="drop-right"></div>');
 
-        divl.append(img)
-        .append(imgdel)
-        .append(divclear);
+    divl.append(img)
+    .append(imgdel)
+    .append(divclear);
 
 
-        switch (type) {
-            case "1":
+    switch (type) {
+        case "1":
             if (self.find("input.c_picture_1_startdate").length == 0) {
                 divl.append($('<div>\
                     <label>URL链接:</label><input type="text" class="c_picture_1_url" value="' + obj.Url + '" />\
@@ -634,7 +575,7 @@ $.fn.addImg = function (type, obj) {
             }
 
             break;
-            case "2":
+        case "2":
             divl.append($('<div>\
                 <label>城市ID:</label><input type="text" class="c_picture_2_city" value="' + obj.City + '" />\
                 </div>\
@@ -654,7 +595,7 @@ $.fn.addImg = function (type, obj) {
                 <label>标签:</label><input type="text" class="c_picture_2_tag" value="'+ obj.Tag + '" />\
                 </div>'));
             break;
-            case "3":
+        case "3":
             divl.append($('<div>\
                 <label>城市ID:</label><input type="text" class="c_picture_3_city" value="'+ obj.City + '" />\
                 </div>\
@@ -674,7 +615,7 @@ $.fn.addImg = function (type, obj) {
                 <label>标签:</label><input type="text" class="c_picture_3_tag" value="'+ obj.Tag + '" />\
                 </div>'));
             break;
-            case "4":
+        case "4":
             divl.append($('<div>\
                 <label>专题ID:</label><input type="text" class="c_picture_4_subjectId" value="'+ obj.SubjectId + '" />\
                 </div>\
@@ -689,7 +630,7 @@ $.fn.addImg = function (type, obj) {
                 </div>\
                 </div>'));
             break;
-            case "5":
+        case "5":
             divl.append($('<div>\
                 <label>酒店ID:</label><input type="text" class="c_picture_5_hotelId" value="'+ obj.HotelId + '" />\
                 </div>\
@@ -697,12 +638,11 @@ $.fn.addImg = function (type, obj) {
                 <label>酒店名称:</label><input type="text" class="c_picture_5_hotelName" value="'+ obj.HotelName + '" />\
                 </div>'));
             break;
-            default:
+        default:
             break;
-        }
-        li.append(divl).append(divr);
-        self.append(li);
     }
+    li.append(divl).append(divr);
+    self.append(li);
     return self;
 };
 
@@ -819,7 +759,7 @@ var Util = {
                 isLoad = true;
                 t_img = setTimeout(function () {
                     isImgLoad(callback); // 递归扫描
-                }, 500); // 我这里设置的是500毫秒就扫描一次，可以自己调整
+                }, 500); // 500毫秒就扫描一次
             }
         }
 

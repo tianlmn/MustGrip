@@ -9,6 +9,7 @@
             <p>摘要：</p>
             <div><textarea class="txtSummary"></textarea></div>
             <div><input type="button" value="发表" id="btnSavePassage" /></div>
+            <input type="hidden" id="passagdid" value="" />
 		</div>
 	</div>
     <div id="footer" class="clear">
