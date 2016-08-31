@@ -23,7 +23,7 @@ namespace Data
 //      ,[Type]
 //      ,[DataChange_LastTime]
 //      ,[DataChange_CreateTime]
-//  FROM [qds113752475_db].[dbo].[BgPassage] bp(NOLOCK)
+//  FROM [qds167160447_db].[dbo].[BgPassage] bp(NOLOCK)
 //  WHERE bp.PassageId=@PassageId";
 
 //            List<Parameter> paramList = new List<Parameter>();
@@ -88,7 +88,7 @@ namespace Data
       ,[DataChange_CreateTime]
 ,Summary
 ,ROW_NUMBER() OVER (ORDER BY DataChange_CreateTime DESC) AS rn
-  FROM [qds113752475_db].[dbo].[BgPassage] bp(NOLOCK)
+  FROM [qds167160447_db].[dbo].[BgPassage] bp(NOLOCK)
   WHERE 1=1 ");
 
             var paramList = new List<SqlParameter>();
@@ -132,9 +132,10 @@ namespace Data
                 new SqlParameter("@Title", entity.Title??string.Empty),
                 new SqlParameter("@Type", entity.Type),
                 //new SqlParameter("@Author", entity.Author??string.Empty),
-                new SqlParameter("@Summary", entity.Summary??string.Empty)
+                new SqlParameter("@Summary", entity.Summary??string.Empty),
+                new SqlParameter("@DataChange_LastTime", DateTime.Now),
             };
-            dbhelper.ExecuteProc("spA_BgPassage_u", paramList);
+            dbhelper.ExecuteProc("BgPassage_Update", paramList);
         }
 
         public static void InsertEntity(PassageEntity entity)
@@ -142,14 +143,16 @@ namespace Data
             var dbhelper = new MDBHelper(DBConnectionString.DB1);
             SqlParameter[] paramList = new SqlParameter[]
             {
-                new SqlParameter("@PassageId", entity.PassageId),
                 new SqlParameter("@Path", entity.Path??string.Empty),
                 new SqlParameter("@Title", entity.Title??string.Empty),
                 new SqlParameter("@Type", entity.Type),
                 new SqlParameter("@Author", entity.Author??string.Empty),
-                new SqlParameter("@Summary", entity.Summary??string.Empty)
+                new SqlParameter("@Summary", entity.Summary??string.Empty),
+                new SqlParameter("@DataChange_LastTime", DateTime.Now),
+                new SqlParameter("@DataChange_CreateTime", DateTime.Now)
+                
             };
-            dbhelper.ExecuteProc("spA_BgPassage_i", paramList);
+            dbhelper.ExecuteProc("BgPassage_Insert", paramList);
         }
     }
 }

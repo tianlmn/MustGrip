@@ -1,14 +1,33 @@
 # Files
+
+
 *.o
+
+
 *.a
+
+
 *.so
+
+
 *.rar
+
+
 *.zip
+
+
 *.exe
 
+
+
 # Folders
+
 obj
+
+
 pkg
+
+
 bin
 
 

@@ -22,7 +22,7 @@ namespace Data
       ,[DataChange_LastTime]
       ,[DataChange_CreateTime]
       ,[WebAddress]
-  FROM [qds113752475_db].[dbo].[BgUser](NOLOCK)
+  FROM [qds167160447_db].[dbo].[BgUser](NOLOCK)
   WHERE 1=1 ");
 
             var paramList = new List<SqlParameter>();
@@ -97,9 +97,9 @@ namespace Data
                 new SqlParameter("@WebAddress", classEntity.WebAddress),
 
             };
-            SqlParameter outParam = new SqlParameter("@BgUserId", 0);
-            outParam.Direction = ParameterDirection.Output;
-            int output =dbhelper.ExecuteProcWithOutput("BgUser_ADD", paramList, outParam);
+            SqlParameter outParam = new SqlParameter("@ReferenceID", 0);
+            outParam.Direction = ParameterDirection.ReturnValue;
+            int output = dbhelper.ExecuteProcWithOutput("BgUser_Insert", paramList, outParam);
             return output;
         }
 

@@ -34,47 +34,49 @@ namespace MustGrip.Handle
             List<BgMessageRankEntity> rList;
             string response = string.Empty;
             string msg = string.Empty;
-            switch (f)
+            try
             {
-                case "SavePassage":
+                switch (f)
+                {
+                    case "SavePassage":
 
-                    SavePassage(json.Deserialize<PassageEntity>(data),serverRootPath, blogFileTempPath, out msg);
-                    response = json.Serialize(
-                        new
-                        {
-                            success = 1,
-                            msg
-                        }
-                        );
-                    break;
-                case "GetPassageList":
-                    pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data), serverRootPath);
-                    response = json.Serialize(new { success = 1, result = new { PassageList = pList } });
-                    break;
-                case "GetPassage":
-                    pEntity = json.Deserialize<PassageEntity>(data);
-                    pList = BlogBusiness.GetPassageList(pEntity, serverRootPath);
-                    if (pList != null && pList.Count > 0)
-                    {
-                        var htmlcontent = BlogBusiness.ReadFile(pList[0].Path);
-                        response = json.Serialize(new
-                        {
-                            success = 1,
-                            result = new
+                        SavePassage(json.Deserialize<PassageEntity>(data), serverRootPath, blogFileTempPath, out msg);
+                        response = json.Serialize(
+                            new
                             {
-                                content = htmlcontent,
-                                passage = pList[0]
+                                success = 1,
+                                msg
                             }
-                        });
-                    }
-                    else
-                    {
-                        response = json.Serialize(new { success = 0, msg = "文章内容被删除" });
-                    }
-                    break;
-                case "GetMessage":
-                    pEntity = json.Deserialize<PassageEntity>(data);
-                    mList = BgMessageBusiness.GetMessageListByPassageId(pEntity.PassageId);
+                            );
+                        break;
+                    case "GetPassageList":
+                        pList = BlogBusiness.GetPassageList(json.Deserialize<PassageEntity>(data), serverRootPath);
+                        response = json.Serialize(new {success = 1, result = new {PassageList = pList}});
+                        break;
+                    case "GetPassage":
+                        pEntity = json.Deserialize<PassageEntity>(data);
+                        pList = BlogBusiness.GetPassageList(pEntity, serverRootPath);
+                        if (pList != null && pList.Count > 0)
+                        {
+                            var htmlcontent = BlogBusiness.ReadFile(pList[0].Path);
+                            response = json.Serialize(new
+                            {
+                                success = 1,
+                                result = new
+                                {
+                                    content = htmlcontent,
+                                    passage = pList[0]
+                                }
+                            });
+                        }
+                        else
+                        {
+                            response = json.Serialize(new {success = 0, msg = "文章内容被删除"});
+                        }
+                        break;
+                    case "GetMessage":
+                        pEntity = json.Deserialize<PassageEntity>(data);
+                        mList = BgMessageBusiness.GetMessageListByPassageId(pEntity.PassageId);
                         uList = BgUserBusiness.GetBgUserEntityList(new BgUserEntity());
                         rList = BgMessageBusiness.GetRankByPassageId(pEntity.PassageId);
                         response = json.Serialize(new
@@ -96,39 +98,45 @@ namespace MustGrip.Handle
                                         PRankId = m.PRankId,
                                         BgMessageId = m.BgMessageId,
                                         MaxRankId = r.MaxRankId,
-                                        ChildList= new List<BgMessageTreeEntity>()
+                                        ChildList = new List<BgMessageTreeEntity>()
                                     }).ToList(), "MasterMessageId", "BgMessageId", "ChildList")
                             }
                         });
-                    break;
-                case "PostMessage":
-                    var sUserData = context.Request.Params["userdata"];
-                    var userid = BgUserBusiness.WriteBgUserEntity(json.Deserialize<BgUserEntity>(sUserData));
-                    if (userid > 0)
-                    {
-                        var messageEntity = json.Deserialize<BgMessageEntity>(data);
-                        messageEntity.Author = userid;
-                        BgMessageBusiness.PostMessage(messageEntity);
-                        response = json.Serialize(new { success = 1, msg = "留言成功" });
-                    }
-                    else
-                    {
-                        response = json.Serialize(new { success = 0, msg = "用户名异常" });
-                    }
-                    break;
+                        break;
+                    case "PostMessage":
+                        var sUserData = context.Request.Params["userdata"];
+                        var userid = BgUserBusiness.WriteBgUserEntity(json.Deserialize<BgUserEntity>(sUserData));
+                        if (userid > 0)
+                        {
+                            var messageEntity = json.Deserialize<BgMessageEntity>(data);
+                            messageEntity.Author = userid;
+                            BgMessageBusiness.PostMessage(messageEntity);
+                            response = json.Serialize(new {success = 1, msg = "留言成功"});
+                        }
+                        else
+                        {
+                            response = json.Serialize(new {success = 0, msg = "用户名异常"});
+                        }
+                        break;
 
 
+                }
+
+                context.Response.ContentType = "application/json";
+                context.Response.Write(response);
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
 
-            context.Response.ContentType = "application/json";
-            context.Response.Write(response);
         }
 
         private int SavePassage(PassageEntity entity, string serverRootPath, string blogFileTempPath, out string msg)
         {
             string filename = Guid.NewGuid().ToString();
-            entity.Path = serverRootPath + blogFileTempPath + "\\" + filename + ".html";
-            return BlogBusiness.SavePassage(entity, out msg);
+            entity.Path = blogFileTempPath + "\\" + filename + ".html";
+            return BlogBusiness.SavePassage(entity, serverRootPath, out msg);
         }
 
         public bool IsReusable

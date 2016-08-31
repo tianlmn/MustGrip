@@ -29,12 +29,11 @@ namespace Data
 	            new SqlParameter("@Message", classEntity.Message),
 	            new SqlParameter("@DataChange_LastTime", DateTime.Now),
 	            new SqlParameter("@DataChange_CreateTime", DateTime.Now),
-	
 	        };
-            var paramOut = new SqlParameter("@BgMessageId", 0);
-            paramOut.Direction = ParameterDirection.Output;
+            var paramOut = new SqlParameter("@@ReferenceID", 0);
+            paramOut.Direction = ParameterDirection.ReturnValue;
 
-            return dbhelper.ExecuteProcWithOutput("BgMessage_Add", paramList, paramOut);
+            return dbhelper.ExecuteProcWithOutput("BgMessage_Insert", paramList, paramOut);
         }
 
         public static List<BgMessageEntity> GetBgMessageEntityListByPassageId(int passageId)
@@ -49,7 +48,7 @@ namespace Data
       ,[DataChange_LastTime]
       ,[DataChange_CreateTime]
       ,[Author]
-  FROM [qds113752475_db].[dbo].[BgMessage](NOLOCK)
+  FROM [qds167160447_db].[dbo].[BgMessage](NOLOCK)
   WHERE PassageId=@PassageId ");
 
             var paramList = new List<SqlParameter>();

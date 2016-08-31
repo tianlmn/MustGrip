@@ -244,7 +244,7 @@ $.fn.getPassage = function (pid) {
                     //加载摘要
                     $(".txtSummary").val(jsonData.result.passage.Summary);
 
-                    //这段只能这么写了，其实下回应该用ckeditor，这个讲究用一下，直接操作它的wraped对象了
+                    //这段只能这么写了，其实下回应该用ckeditor，这个将就用一下，直接操作它的wraped对象了
                     $self[0].$area.val(htmlcontent);
                     $self[0].updateFrame();
                 }
@@ -268,8 +268,8 @@ var PictureList = function () {
         initSave();
     };
 
-    var HANDLE = "Handle/MustGripPictureHandle.ashx";
-    var PICTUREHANDLE = "Handle/UploadHandle.ashx";
+    var HANDLE = "../Handle/MustGripPictureHandle.ashx";
+    var PICTUREHANDLE = "../Handle/UploadHandle.ashx";
     var initImgdrag = function () {
     // 正在拖动的图片的父级DIV 
     var $srcImgDiv = null;

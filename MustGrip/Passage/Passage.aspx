@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MustGrip.Master" AutoEventWireup="true" CodeBehind="Passage.aspx.cs" Inherits="MustGrip.Passage.Passage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="../MustGrip.Master" AutoEventWireup="true" CodeBehind="Passage.aspx.cs" Inherits="MustGrip.Passage.Passage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

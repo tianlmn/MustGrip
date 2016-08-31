@@ -11,7 +11,7 @@ namespace Business
 {
     public class BlogBusiness
     {
-        public static int SavePassage(PassageEntity entity, out string msg)
+        public static int SavePassage(PassageEntity entity, string serverRootPath, out string msg)
         {
             msg = string.Empty;
             try
@@ -20,7 +20,7 @@ namespace Business
                 {
                     entity.DataChange_CreateTime = DateTime.Now;
                     entity.DataChange_LastTime = DateTime.Now;
-                    WriteFile(entity.Content, entity.Path);
+                    WriteFile(entity.Content, serverRootPath+entity.Path);
                     if (entity.PassageId > 0)
                     {
                         BlogData.UpdateEntity(entity);

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MustGrip.Master" AutoEventWireup="true" CodeBehind="PassageEdit.aspx.cs" Inherits="MustGrip.Passage.PassageEdit" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="../MustGrip.Master" AutoEventWireup="true" CodeBehind="PassageEdit.aspx.cs" Inherits="MustGrip.Passage.PassageEdit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -18,9 +18,9 @@
             <a target="_blank" href="http://www.miitbeian.gov.cn/">苏ICP备16013907号</a>
         </p>
     </div>
-    <script src="/js/jquery-1.12.2.js"></script>
-    <script src="/Plugin/CLEditor1_4_5/jquery.cleditor.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="../js/jquery-1.12.2.js"></script>
+    <script src="../Plugin/CLEditor1_4_5/jquery.cleditor.js"></script>
+    <script src="../js/app.js"></script>
 
     <script>
         peInit();

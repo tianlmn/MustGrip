@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -19,15 +19,15 @@
                 m_nodeObj = $(".content li:eq(" + $("#itemNumb").val() + ")");
                 t_nodeObj = $(".content li:eq(" + $("#setNumb").val() + ")");
 
-                ////·½°¸Ò» ÎÞ¶¯»­
+                ////ï¿½ï¿½ï¿½ï¿½Ò» ï¿½Þ¶ï¿½ï¿½ï¿½
                 //m_nodeObj.insertAfter(t_nodeObj);
 
-                ////·½°¸¶þ
+                ////ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 //$(m_nodeObj).animate({ "width": "toggle" }, function () {
                 //    $(this).insertAfter($(t_nodeObj)).animate({ "width": "toggle" })
                 //})
 
-                //·½°¸Èý
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 $(m_nodeObj).clone(true).appendTo(".content ul")
                 .css({ "position": "absolute", "top": node.ordinate(m_nodeObj), "left": node.abscissa(m_nodeObj) })
                 .animate({ width: node.width(m_nodeObj) + 10, height: node.height(m_nodeObj) + 10, top: node.ordinate(m_nodeObj) - 5, left: node.abscissa(m_nodeObj) - 5 }, 200, function () {

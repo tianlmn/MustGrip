@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MustGrip.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Mustgrip.Index" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="./MustGrip.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Mustgrip.Index" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
