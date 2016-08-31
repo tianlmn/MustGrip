@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using Business;
+using Entity;
 
 
 namespace Ctrip.Hotel.Business.UI.HotelInfo.HostelHotelOffline.Handler
@@ -26,12 +28,12 @@ namespace Ctrip.Hotel.Business.UI.HotelInfo.HostelHotelOffline.Handler
             {
                 switch (f)
                 {
-                    case "getImageListByType":
-                        //response = json.Serialize(new {success = 1, result = GetImageListByType(type)});
+                    case "getPictureListByGroup":
+                        response = json.Serialize(new {success = true, result = GetPictureListByGroup(type)});
                         break;
                     case "setImageListByType":
                         //SetImageListByType(type, json.Deserialize<List<HostelHotelConfigEntity>>(sData));
-                        response = json.Serialize(new { success = 1, msg = "保存成功" });
+                        response = json.Serialize(new { success = true, msg = "保存成功" });
                         break;
 
                 }
@@ -46,12 +48,11 @@ namespace Ctrip.Hotel.Business.UI.HotelInfo.HostelHotelOffline.Handler
             context.Response.Write(response);
         }
 
-        //protected List<HostelHotelConfigEntity> GetImageListByType(string sData)
-        //{
-        //    int type = int.Parse(sData);
-        //    return HostelHotelConfigBusiness.GetImageListByType(type);
-        //    return null;
-        //}
+        protected List<BgPictureEntity> GetPictureListByGroup(string data)
+        {
+            int group = Int32.Parse(data);
+            return BgPictureBusiness.GetPictureListByGroup(group);
+        }
 
         //protected void SetImageListByType(string type, List<HostelHotelConfigEntity> sData)
         //{

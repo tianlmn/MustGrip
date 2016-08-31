@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BgMessageData.cs" />
+    <Compile Include="BgPictureData.cs" />
     <Compile Include="BlogData.cs" />
     <Compile Include="BgUserData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

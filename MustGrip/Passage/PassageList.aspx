@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <div id="main" class="clear">
         <div>
             <a href="/Passage/PassageEdit.aspx" type="button">新增</a>
@@ -18,15 +18,7 @@
                 <input type="button" id="btnGoToPage" value="确定" />
             </div>
         </div>
-        
     </div>
-    <div id="footer" class="clear">
-        <p>
-            Copyright© 2016-2016 肖斐<br />
-            <a target="_blank" href="http://www.miitbeian.gov.cn/">苏ICP备16013907号</a>
-        </p>
-    </div>
-
     <script type="text/x-jquery-tmpl" class="tmplPassageList">
         <li>
             <div class="lihead">${CreateTime}</div>

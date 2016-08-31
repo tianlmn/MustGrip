@@ -85,6 +85,8 @@
     <Content Include="Passage\PassageEdit.aspx" />
     <Content Include="Passage\PassageList.aspx" />
     <Content Include="Passage\tmp.html" />
+    <Content Include="Picture\GroupList.aspx" />
+    <Content Include="Picture\PictureList.aspx" />
     <Content Include="Picture\wenzhang.html" />
     <Content Include="Plugin\CLEditor1_4_5\images\buttons.gif" />
     <Content Include="Plugin\CLEditor1_4_5\images\toolbar.gif" />
@@ -156,6 +158,20 @@
     </Compile>
     <Compile Include="Passage\PassageList.aspx.designer.cs">
       <DependentUpon>PassageList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Picture\GroupList.aspx.cs">
+      <DependentUpon>GroupList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Picture\GroupList.aspx.designer.cs">
+      <DependentUpon>GroupList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Picture\PictureList.aspx.cs">
+      <DependentUpon>PictureList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Picture\PictureList.aspx.designer.cs">
+      <DependentUpon>PictureList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

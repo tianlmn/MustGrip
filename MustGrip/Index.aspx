@@ -4,7 +4,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <div id="main" class="clear">
         <div class="intro">
             <div class="introcontainer">
@@ -27,12 +27,7 @@
             </div>
         </div>
     </div>
-    <div id="footer" class="clear">
-        <p>
-            Copyright© 2016-2016 肖斐<br />
-            <a target="_blank" href="http://www.miitbeian.gov.cn/">苏ICP备16013907号</a>
-        </p>
-    </div>
+    
     <script src="js/jquery-1.12.2.js"></script>
     <script src="js/app.js"></script>
     <script>

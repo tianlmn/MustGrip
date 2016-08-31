@@ -19,17 +19,22 @@
                 <div class="menu">
                     <ul>
                         <li><a href="/Index.aspx">首页</a></li>
-                        <li><a href="/Passage/passageList.aspx">文章</a></li>
-                        <li><a href="">相册</a></li>
+                        <li><a href="/Passage/PassageList.aspx">文章</a></li>
+                        <li><a href="/Picture/PictureList.aspx">相册</a></li>
                         <li><a href="">资源</a></li>
                     </ul>
                 </div>
             </div>
 
 
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            <asp:ContentPlaceHolder ID="body" runat="server">
             </asp:ContentPlaceHolder>
-            
+            <div id="footer" class="clear">
+                <p>
+                    Copyright© 2016-2016 肖斐<br />
+                    <a target="_blank" href="http://www.miitbeian.gov.cn/">苏ICP备16013907号</a>
+                </p>
+            </div>
         </div>
     </form>
 </body>
